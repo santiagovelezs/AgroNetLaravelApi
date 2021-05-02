@@ -11,6 +11,7 @@ use App\Http\Resources\Api\V1\AddrResource;
 use App\Http\Resources\Api\V1\EventResourceCollection;
 use App\Models\Event;
 use App\Models\GeoLocation;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -163,6 +164,24 @@ class EventController extends Controller
             'title'  => 'Not Found'
             ]
         ], 404);
+    }
+
+    public function circundantes(Request $request, $lt, $lng, $val)
+    {
+        $events = Event::wherein('events.state', ["pendiente", "en_curso"])                                
+                    ->join('addrs', 'events.addr_id', '=', 'addrs.id')
+                    ->join('geo_locations', 'geo_locations.addr_id', '=', 'addrs.id')                    
+                    ->whereRaw('acos(sin(PI()*geo_locations.latitud/180)*sin(PI()*?/180.0)
+                                +cos(PI()*geo_locations.latitud/180.0)
+                                *cos(PI()*?/180.0)
+                                *cos(PI()*?/180.0-PI()
+                                *geo_locations.longitud/180.0))*6371 < ? ',
+                            [$lt, $lt, $lng, $val])                    
+                    ->get();
+                            
+        
+        return new EventResourceCollection($events);
+        
     }
     
 }

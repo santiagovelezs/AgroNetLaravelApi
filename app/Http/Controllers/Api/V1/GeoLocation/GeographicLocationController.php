@@ -88,12 +88,15 @@ class GeographicLocationController extends Controller
                     ->get();*/
 
         $geos = DB::table('geo_locations')
+                    ->join('addrs', 'geo_locations.addr_id', '=', 'addrs.id')
+                    ->join('events', 'events.addr_id', '=', 'addrs.id')                    
                     ->whereRaw('acos(sin(PI()*geo_locations.latitud/180)*sin(PI()*?/180.0)
                                 +cos(PI()*geo_locations.latitud/180.0)
                                 *cos(PI()*?/180.0)
                                 *cos(PI()*?/180.0-PI()
-                                *geo_locations.longitud/180.0))*6371 < ?',
+                                *geo_locations.longitud/180.0))*6371 < ? ',
                             [$lt, $lt, $lng, $val])
+                    ->whereRaw('events.state = ? OR events.state = ?', ["pendiente", "en_curso"])
                     ->get();            
         
         return new GeoLocationResourceCollection($geos);
