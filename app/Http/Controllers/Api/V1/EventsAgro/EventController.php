@@ -178,7 +178,7 @@ class EventController extends Controller
                                 *geo_locations.longitud/180.0))*6371 < ? ',
                             [$lt, $lt, $lng, $val])                    
                     ->get();
-                            
+                            //https://github.com/co0lsky/seeding-data-in-the-testing/blob/master/app/User.php
         
         return new EventResourceCollection($events);
         

@@ -20,7 +20,11 @@ class GeoLocationResource extends JsonResource
             'attributes' => [
                 'latitud' => $this->latitud,
                 'longitud' => $this->longitud,
-                'addr_id' => $this->addr_id
+                'addr_id' => $this->addr_id,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at
+            ],
+            'relationships' => [
             ],
             'links' => [
                 'self' => 'route()'

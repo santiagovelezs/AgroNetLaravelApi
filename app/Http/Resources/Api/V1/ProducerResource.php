@@ -20,6 +20,8 @@ class ProducerResource extends JsonResource
             'attributes' => [
                 'sede_ppal' => $this->sede_ppal
             ],
+            'relationships' => [
+            ],
             'links' => [
                 'self' => 'route()'
             ]
