@@ -53,6 +53,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     });
 
     Route::middleware(['auth:sanctum', 'role:'.Role::PRODUCER])->group(function () {
+        Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class)->except('store');
         Route::apiResource('events', App\Http\Controllers\Api\V1\EventsAgro\EventController::class)->except(['index']);    
     });
 

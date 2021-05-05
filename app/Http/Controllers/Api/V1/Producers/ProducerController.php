@@ -38,9 +38,33 @@ class ProducerController extends Controller
         
     }
     
-    public function show($id)
+    public function show(Request $request, $id)
     {
-       //
+        if($request->user()->admin)
+        {
+            $user = Producer::find($id);
+
+            if($user)
+            {
+                return new ProducerResource($user);
+            }
+
+            return response()->json(['errors' => [
+                'status' => 404,
+                'title'  => 'Not Found'
+                ]
+            ], 404);            
+            
+        }
+
+        if($request->user()->producer->id == $id)
+        {
+            return new ProducerResource($request->user()->producer);
+        }
+        
+        return response()->json([
+                'message' => 'Unauthorized'
+                ], 401);
     }
     
     public function update(Request $request, $id)
