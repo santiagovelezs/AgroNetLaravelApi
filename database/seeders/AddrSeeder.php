@@ -97,5 +97,38 @@ class AddrSeeder extends Seeder
             'location'=>'Mirador Niza',
             'etiqueta'=>'Mirador Niza'
         ]);
+
+        // ID 8
+        DB::table('addrs')->insert([
+            'registered_user_id'=>5,
+            'country'=>'Colombia',
+            'province'=>'caldas',
+            'city'=>'Manizales',
+            'street'=>'Cr 23 Transversal 72',
+            'location'=>'Mirador Niza',
+            'etiqueta'=>'Mirador Niza'
+        ]);
+
+        // ID 9
+        DB::table('addrs')->insert([
+            'registered_user_id'=>4,
+            'country'=>'Colombia',
+            'province'=>'caldas',
+            'city'=>'Manizales',
+            'street'=>'Cr 23 Transversal 72',
+            'location'=>'Mirador Niza',
+            'etiqueta'=>'Mirador Niza'
+        ]);
+
+        // ID 10
+        DB::table('addrs')->insert([
+            'registered_user_id'=>5,
+            'country'=>'Colombia',
+            'province'=>'caldas',
+            'city'=>'Manizales',
+            'street'=>'Cr 23 Transversal 72',
+            'location'=>'Mirador Niza',
+            'etiqueta'=>'Mirador Niza'
+        ]);
     }
 }

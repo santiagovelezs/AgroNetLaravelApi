@@ -20,6 +20,8 @@ class AdminResource extends JsonResource
             'attributes' => [
 
             ],
+            'relationships' => [
+            ],
             'links' => [
                 'self' => 'route()'
             ]
