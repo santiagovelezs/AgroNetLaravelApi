@@ -45,7 +45,7 @@ class EventController extends Controller
             return new EventResource($event);           
         }  
         //dd($user->producer->id);
-        if($user->producer->registered_user_id == $request->input('data.attributes.producer_id'))
+        if($user->producer->registered_user_id == $request->input('data.attributes.user_id'))
         {
             $addr = $user->addrs()->find($request->input('data.attributes.addr_id'));
             //dd($addr);
@@ -176,8 +176,7 @@ class EventController extends Controller
                                 *cos(PI()*?/180.0-PI()
                                 *geo_locations.longitud/180.0))*6371 < ? ',
                             [$lt, $lt, $lng, $val])                    
-                    ->get();
-                            //https://github.com/co0lsky/seeding-data-in-the-testing/blob/master/app/User.php
+                    ->get();                            
         
         return new EventResourceCollection($events);
         

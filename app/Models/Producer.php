@@ -31,4 +31,9 @@ class Producer extends RegisteredUser
         return $this->hasMany(Event::class);
     }
 
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
+
 }

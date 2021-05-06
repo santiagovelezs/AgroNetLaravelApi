@@ -4,7 +4,7 @@ namespace App\Http\Requests\api\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EventRequest extends FormRequest
+class NewsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,11 +28,9 @@ class EventRequest extends FormRequest
             'data' => ['required', 'array'],
             'data.type' => ['required'],
             'data.attributes' => ['required', 'array'],
-            'data.attributes.user_id' => ['required', 'exists:producers,id'],
-            'data.attributes.addr_id' => ['required', 'numeric', 'exists:addrs,id'],
-            'data.attributes.fecha' => ['required', 'string', 'max:255'],
-            'data.attributes.hora' => ['required', 'string', 'max:255'],
-            'data.attributes.duracion' => ['required', 'numeric']
+            'data.attributes.user_id' => ['required', 'exists:producers,registered_user_id'],
+            'data.attributes.title' => ['required', 'string', 'max:255'],
+            'data.attributes.content' => ['required', 'string']
         ];
     }
 }
