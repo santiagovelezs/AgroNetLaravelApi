@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Producers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\RegisteredUser;
 use App\Http\Requests\api\v1\ProducerRequest;
 use App\Http\Resources\Api\V1\ProducerResource;
 use App\Http\Resources\Api\V1\EventResourceCollection;
@@ -42,11 +43,12 @@ class ProducerController extends Controller
     {
         if($request->user()->admin)
         {
-            $user = Producer::find($id);
+            $user = RegisteredUser::find($id);
+            $producer = $user->producer;
 
-            if($user)
+            if($producer)
             {
-                return new ProducerResource($user);
+                return new ProducerResource($producer);
             }
 
             return response()->json(['errors' => [
@@ -57,7 +59,7 @@ class ProducerController extends Controller
             
         }
 
-        if($request->user()->producer->id == $id)
+        if($request->user()->producer->registered_user_id == $id)
         {
             return new ProducerResource($request->user()->producer);
         }
@@ -78,8 +80,9 @@ class ProducerController extends Controller
     }
 
     public function events($id)
-    {        
-        $producer = Producer::find($id);
+    {
+        $user = RegisteredUser::find($id);      
+        $producer = $user->producer;
         if($producer)
         {
             $events = $producer->events;

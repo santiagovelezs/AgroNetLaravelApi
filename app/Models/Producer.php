@@ -14,6 +14,8 @@ class Producer extends RegisteredUser
 
     public function hasType($role)
     {
+        if($role == Role::REGISTERED_USER)
+            return true;
         if($role == Role::PRODUCER)
             return true;
         return parent::hasType($role);
