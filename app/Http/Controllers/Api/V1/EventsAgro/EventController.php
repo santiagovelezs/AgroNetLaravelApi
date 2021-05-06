@@ -21,8 +21,7 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        //Example Coming Events : http://localhost:8000/api/events?date=2019-12-31
+    {        
 
         $eventos = Event::simplePaginate(25);
 
@@ -46,7 +45,7 @@ class EventController extends Controller
             return new EventResource($event);           
         }  
         //dd($user->producer->id);
-        if($user->producer->id == $request->input('data.attributes.producer_id'))
+        if($user->producer->registered_user_id == $request->input('data.attributes.producer_id'))
         {
             $addr = $user->addrs()->find($request->input('data.attributes.addr_id'));
             //dd($addr);
