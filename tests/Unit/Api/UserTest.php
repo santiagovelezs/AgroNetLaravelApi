@@ -11,11 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserTest extends TestCase
-{ 
-    //use DatabaseTransactions;  
-
-    //use DatabaseMigrations;
-
+{
     const jsonUserStructure = [
         'data' => [ 
             'type',
@@ -53,7 +49,7 @@ class UserTest extends TestCase
     public function test_UserRegistration()
     {
         $email = "user001@mail.es";       
-        $response = $this->post('http://localhost:8000/api/v1/users', $this->getStoreRequest($email));                     
+        $response = $this->post('api/v1/users', $this->getStoreRequest($email));                     
 
         $response->assertStatus(201);
 
@@ -64,14 +60,14 @@ class UserTest extends TestCase
     {
         $email = "admin@mail.es";       
         
-        $response = $this->withHeaders(['Accept' => 'aplication/json'])->post('http://localhost:8000/api/v1/users', $this->getStoreRequest($email));
+        $response = $this->withHeaders(['Accept' => 'aplication/json'])->post('api/v1/users', $this->getStoreRequest($email));
 
         $response->assertStatus(422);        
     }
 
     public function test_UserLogin()
     {
-        $response = $this->withHeaders(['Accept' => 'aplication/json'])->post('http://localhost:8000/api/v1/auth', [
+        $response = $this->withHeaders(['Accept' => 'aplication/json'])->post('api/v1/auth', [
             "data" => [
                 "type" => "RegisteredUser",
                 "attributes" => [
@@ -87,7 +83,7 @@ class UserTest extends TestCase
 
     public function test_UserIncorrectLogin()
     {
-        $response = $this->withHeaders(['Accept' => 'aplication/json'])->post('http://localhost:8000/api/v1/auth', [
+        $response = $this->withHeaders(['Accept' => 'aplication/json'])->post('api/v1/auth', [
             "data" => [
                 "type" => "RegisteredUser",
                 "attributes" => [
@@ -107,7 +103,7 @@ class UserTest extends TestCase
             RegisteredUser::find(1)            
         );
 
-        $response = $this->delete('http://localhost:8000/api/v1/auth');
+        $response = $this->delete('api/v1/auth');
 
         $response->assertStatus(200); 
 
@@ -120,7 +116,7 @@ class UserTest extends TestCase
             RegisteredUser::find(3)            
         );
 
-        $response = $this->get('http://localhost:8000/api/v1/users/3');
+        $response = $this->get('api/v1/users/3');
 
         $response->assertStatus(200); 
 
@@ -134,7 +130,7 @@ class UserTest extends TestCase
             RegisteredUser::find(2)            
         );
 
-        $response = $this->get('http://localhost:8000/api/v1/users/3');
+        $response = $this->get('api/v1/users/3');
 
         $response->assertStatus(401);       
        
@@ -146,7 +142,7 @@ class UserTest extends TestCase
             RegisteredUser::find(1)            
         );
 
-        $response = $this->get('http://localhost:8000/api/v1/users/3');
+        $response = $this->get('api/v1/users/3');
 
         $response->assertStatus(200); 
 

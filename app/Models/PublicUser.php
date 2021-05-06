@@ -21,8 +21,10 @@ class PublicUser
 
     public function roleOf($roleName)
     {
+        //dd($roleName);
         foreach($this->roles as $role)
         {
+            //dd($role);
             if($role->hasType($roleName))
                 return $role;
         }

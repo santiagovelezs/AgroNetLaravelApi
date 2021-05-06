@@ -5,10 +5,8 @@ namespace App\Models;
 class Admin extends RegisteredUser
 {
     public function hasType($role)
-    {
-        if($role == Role::ADMIN)
-            return true;
-        return parent::hasType($role);
+    {       
+        return true;        
     }
 
     public function owner()

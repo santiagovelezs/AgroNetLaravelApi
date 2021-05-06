@@ -45,7 +45,7 @@ class GeoLocationTest extends TestCase
             RegisteredUser::find(1)            
         );           
         
-        $response = $this->post('http://localhost:8000/api/v1/geo-locations', $this->getStoreRequest(8));                     
+        $response = $this->post('api/v1/geo-locations', $this->getStoreRequest(8));                     
 
         $response->assertStatus(201);
 
@@ -58,7 +58,7 @@ class GeoLocationTest extends TestCase
             RegisteredUser::find(5)            
         );           
         
-        $response = $this->post('http://localhost:8000/api/v1/geo-locations', $this->getStoreRequest(8));                     
+        $response = $this->post('api/v1/geo-locations', $this->getStoreRequest(8));                     
 
         $response->assertStatus(201);
 
@@ -71,20 +71,26 @@ class GeoLocationTest extends TestCase
         $lngPlazaBolivarMzles = -75.51735301643926;
         $radio = 0.5; //500 metros
         
-        $response = $this->get('http://localhost:8000/api/v1/events/geo/'.$ltPlazaBolivarMzles.'/'.$lngPlazaBolivarMzles.'/'.$radio); 
+        $response = $this->get('api/v1/events/geo/'.$ltPlazaBolivarMzles.'/'.$lngPlazaBolivarMzles.'/'.$radio); 
         
-        $response->assertStatus(200);
+        $response->assertStatus(200);       
 
-        /*$response->assertJsonFragment([
-            "data" => 
-                [                
-                    "type" => "GeoLocation",
-                    "id" => 1,
-                    "attributes" => [                        
-                        "addr_id" => 1  // Dirección id 1 = Plaza Bolivar                      
-                    ]                    
-                ]
-        ]);*/
+        $response->assertJsonFragment(['addr_id' => 1]); // Dirección id 1 = Plaza Bolivar 
+        $response->assertJsonFragment(['addr_id' => 2]); // Dirección id 2 = Plaza Alfonso López
+        
+    }
+
+    public function test_Distance()
+    {
+        $ltRioBlanco = 5.086888739523445;
+        $lngRioBlanco = -75.43064233704608;
+        $radio = 2; //2 km
+        
+        $response = $this->get('api/v1/events/geo/'.$ltRioBlanco.'/'.$lngRioBlanco.'/'.$radio); 
+        
+        $response->assertStatus(200);       
+
+        $response->assertJsonFragment(['count' => 0]);        
         
     }
 

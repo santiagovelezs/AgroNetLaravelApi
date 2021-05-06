@@ -51,7 +51,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(1)            
         );           
         
-        $response = $this->post('http://localhost:8000/api/v1/addrs', $this->getStoreRequest(5));                     
+        $response = $this->post('api/v1/addrs', $this->getStoreRequest(5));                     
 
         $response->assertStatus(201);
 
@@ -65,7 +65,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(2)            
         );           
         
-        $response = $this->post('http://localhost:8000/api/v1/addrs', $this->getStoreRequest(2));
+        $response = $this->post('api/v1/addrs', $this->getStoreRequest(2));
 
         $response->assertStatus(201);
 
@@ -79,7 +79,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(2)            
         );           
         
-        $response = $this->post('http://localhost:8000/api/v1/addrs', $this->getStoreRequest(3));                     
+        $response = $this->post('api/v1/addrs', $this->getStoreRequest(3));                     
 
         $response->assertStatus(401);        
         
@@ -91,7 +91,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(4)            
         );           
         
-        $response = $this->post('http://localhost:8000/api/v1/addrs', $this->getStoreRequest(4));                     
+        $response = $this->post('api/v1/addrs', $this->getStoreRequest(4));                     
 
         $response->assertStatus(201);
 
@@ -105,7 +105,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(4)            
         );           
         
-        $response = $this->post('http://localhost:8000/api/v1/addrs', $this->getStoreRequest(5));                     
+        $response = $this->post('api/v1/addrs', $this->getStoreRequest(5));                     
 
         $response->assertStatus(401);        
         
@@ -117,7 +117,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(1)            
         );           
         
-        $response = $this->get('http://localhost:8000/api/v1/addrs/1');                     
+        $response = $this->get('api/v1/addrs/1');                     
 
         $response->assertStatus(200); 
 
@@ -130,7 +130,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(2)            
         );           
         
-        $response = $this->get('http://localhost:8000/api/v1/addrs/5');                     
+        $response = $this->get('api/v1/addrs/5');                     
 
         $response->assertStatus(404); 
     }
@@ -141,7 +141,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(1)            
         );           
         
-        $response = $this->get('http://localhost:8000/api/v1/addrs/5/geo-location');                     
+        $response = $this->get('api/v1/addrs/5/geo-location');                     
 
         $response->assertJsonStructure($this::jsonStructure); 
     }
@@ -152,7 +152,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(2)            
         );           
         
-        $response = $this->get('http://localhost:8000/api/v1/addrs/5/geo-location');                     
+        $response = $this->get('api/v1/addrs/5/geo-location');                     
 
         $response->assertStatus(404);  
     }
@@ -163,7 +163,7 @@ class AddrTest extends TestCase
             RegisteredUser::find(2)            
         );           
         
-        $response = $this->get('http://localhost:8000/api/v1/addrs/3/geo-location');                     
+        $response = $this->get('api/v1/addrs/3/geo-location');                     
 
         $response->assertJsonStructure($this::jsonStructure); 
     }

@@ -21,8 +21,12 @@ class EnsureUserHasRole
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        $user = new PublicUser();
-        $user->addRole($this->hasRole($request->user(), $role));        
+        $user = new PublicUser();       
+        $user->addRole($request->user()); // Add Reg User Role            
+        if($request->user()->admin)
+            $user->addRole($request->user()->admin);
+        if($request->user()->producer)
+            $user->addRole($request->user()->producer);        
         if (! $user->roleOf($role))
         {            
             return response()->json([
@@ -32,14 +36,5 @@ class EnsureUserHasRole
 
         return $next($request);
     }
-
-    public function hasRole($user, $type)
-    {
-        if($type == Role::ADMIN)
-            return $user->admin;
-        if($type == Role::PRODUCER)
-            return $user->producer;
-        if($type == Role::REGISTERED_USER)
-            return $user;
-    }
+    
 }

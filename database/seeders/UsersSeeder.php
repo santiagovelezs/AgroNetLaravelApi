@@ -68,5 +68,15 @@ class UsersSeeder extends Seeder
             'telefono'=>$faker->phoneNumber(),
         ]);
 
+        DB::table('registered_users')->insert([
+            'nombre'=> 'user',
+            'apellido'=>'03',
+            'email'=>'user03@mail.es',
+            'password'=> Hash::make('hola123'),
+            'departamento'=>$faker->state(),
+            'ciudad'=>$faker->city(),
+            'telefono'=>$faker->phoneNumber(),
+        ]);
+
     }
 }

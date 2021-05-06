@@ -60,6 +60,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     Route::middleware(['auth:sanctum', 'role:'.Role::ADMIN])->group(function () {
         Route::group(['prefix'=>'admin','as'=>'api.v1.'], function(){
             Route::apiResource('users', App\Http\Controllers\Api\V1\Users\RegisteredUserController::class);
+            Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class);
             Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class);
             Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class);
         });
