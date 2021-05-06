@@ -41,6 +41,10 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('events/{lt}/{lng}/{val}', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'circundantes']);
 
+    Route::get('news', [App\Http\Controllers\Api\V1\News\NewsController::class, 'index']);
+
+    Route::get('news/{id}', [App\Http\Controllers\Api\V1\News\NewsController::class, 'show']);
+
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
         Route::delete('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);
         Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class)->only('store');
@@ -54,7 +58,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::middleware(['auth:sanctum', 'role:'.Role::PRODUCER])->group(function () {
         Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class)->except('store');
-        Route::apiResource('events', App\Http\Controllers\Api\V1\EventsAgro\EventController::class)->except(['index']);    
+        Route::apiResource('events', App\Http\Controllers\Api\V1\EventsAgro\EventController::class)->except(['index']);
+        Route::apiResource('news', App\Http\Controllers\Api\V1\News\NewsController::class)->except(['index', 'show']); 
     });
 
     Route::middleware(['auth:sanctum', 'role:'.Role::ADMIN])->group(function () {
@@ -63,6 +68,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
             Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class);
             Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class);
             Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class);
+            Route::apiResource('news', App\Http\Controllers\Api\V1\News\NewsController::class);
         });
     });
 });

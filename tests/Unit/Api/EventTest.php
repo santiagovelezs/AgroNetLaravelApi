@@ -81,11 +81,11 @@ class EventTest extends TestCase
             RegisteredUser::find(1)            
         );
 
-        $producer_id = 2;
+        $user_id = 2;
 
         $addr_id = 1;
              
-        $response = $this->post('api/v1/events', $this->getStoreRequest($producer_id, $addr_id));                     
+        $response = $this->post('api/v1/events', $this->getStoreRequest($user_id, $addr_id));                     
 
         $response->assertStatus(201);
 
@@ -168,7 +168,7 @@ class EventTest extends TestCase
                 "type" => "Event",
                 "attributes" => [                            
                     "sede_papal" => null,
-                    "producer_id" => $producer_id,
+                    "user_id" => $producer_id,
                     'addr_id' => $addr_id,
                     'fecha' => '2020/10/19',
                     'hora' => '17:00',

@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             AdminsSeeder::class,
             AddrSeeder::class,
             GeoSeeder::class,
-            EventSeeder::class
+            EventSeeder::class,
+            NewsSeeder::class
         ]);
     }
 }
