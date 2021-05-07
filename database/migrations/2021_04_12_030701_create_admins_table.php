@@ -13,14 +13,13 @@ class CreateAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('registered_user_id')->unique();;
+        Schema::create('admins', function (Blueprint $table) {            
+            $table->foreignId('id')->primary();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('registered_user_id')
-                ->references('id')->on('registered_users')
+            $table->foreign('id')
+                ->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
         });

@@ -25,16 +25,16 @@ class GeographicLocationController extends Controller
     {
         $user = $request->user();
 
-        if($user->admin)
-        {           
-            $geo = GeoLocation::create($request->input('data.attributes'));
-            return new GeoLocationResource($geo);           
-        }  
-
-        $addr = $user->addrs()->find($request->input('data.attributes.addr_id'));
-        if($addr)
+        $addr = $user->addrs->find($request->input('data.attributes.addr_id'));        
+              
+        if($user->admin or  $addr)
         {
-            $geo = GeoLocation::create($request->input('data.attributes'));
+            //$geo = GeoLocation::create($request->input('data.attributes'));
+            $geo = new GeoLocation();
+            $geo->latitud = $request->input('data.attributes.latitud');
+            $geo->longitud = $request->input('data.attributes.longitud');
+            $geo->addr_id = $request->input('data.attributes.addr_id');
+            $geo->save();
             return new GeoLocationResource($geo);
         }
 

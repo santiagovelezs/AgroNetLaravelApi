@@ -28,7 +28,7 @@ class NewsRequest extends FormRequest
             'data' => ['required', 'array'],
             'data.type' => ['required'],
             'data.attributes' => ['required', 'array'],
-            'data.attributes.user_id' => ['required', 'exists:producers,registered_user_id'],
+            'data.attributes.producer_id' => ['required', 'exists:producers,id'],
             'data.attributes.title' => ['required', 'string', 'max:255'],
             'data.attributes.content' => ['required', 'string']
         ];

@@ -15,7 +15,7 @@ class AdminsSeeder extends Seeder
     public function run()
     {
         DB::table('admins')->insert([
-            'registered_user_id'=>1,
+            'id'=>1,
         ]);
     }
 }

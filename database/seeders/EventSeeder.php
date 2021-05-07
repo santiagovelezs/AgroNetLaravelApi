@@ -15,7 +15,7 @@ class EventSeeder extends Seeder
     public function run()
     {
         DB::table('events')->insert([
-            'user_id'=>1,
+            'producer_id'=>2,
             'addr_id'=>1,
             'fecha'=>'2021/11/29',
             'hora'=>'13:00',
@@ -23,7 +23,7 @@ class EventSeeder extends Seeder
         ]);
 
         DB::table('events')->insert([
-            'user_id'=>1,
+            'producer_id'=>2,
             'addr_id'=>2,
             'fecha'=>'2021/10/29',
             'hora'=>'13:00',
@@ -31,7 +31,7 @@ class EventSeeder extends Seeder
         ]);
 
         DB::table('events')->insert([
-            'user_id'=>1,
+            'producer_id'=>2,
             'addr_id'=>3,
             'fecha'=>'2021/09/29',
             'hora'=>'13:00',
@@ -39,7 +39,7 @@ class EventSeeder extends Seeder
         ]);
 
         DB::table('events')->insert([
-            'user_id'=>1,
+            'producer_id'=>2,
             'addr_id'=>4,
             'fecha'=>'2021/08/29',
             'hora'=>'13:00',
@@ -47,7 +47,7 @@ class EventSeeder extends Seeder
         ]);
 
         DB::table('events')->insert([
-            'user_id'=>2,
+            'producer_id'=>3,
             'addr_id'=>5,
             'fecha'=>'2021/08/25',
             'hora'=>'13:00',
@@ -55,7 +55,7 @@ class EventSeeder extends Seeder
         ]);
 
         DB::table('events')->insert([
-            'user_id'=>2,
+            'producer_id'=>3,
             'addr_id'=>6,
             'fecha'=>'2021/10/20',
             'hora'=>'13:00',
@@ -63,7 +63,7 @@ class EventSeeder extends Seeder
         ]);
 
         DB::table('events')->insert([
-            'user_id'=>2,
+            'producer_id'=>3,
             'addr_id'=>7,
             'fecha'=>'2021/09/14',
             'hora'=>'13:00',

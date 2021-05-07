@@ -9,7 +9,7 @@ use App\Models\Addr;
 use App\Http\Resources\Api\V1\AddrResource;
 use App\Http\Resources\Api\V1\AddrResourceCollection;
 use App\Http\Resources\Api\V1\GeoLocationResource;
-use App\Models\RegisteredUser;
+use App\Models\User;
 use App\Models\GeoLocation;
 
 class AddrController extends Controller
@@ -34,16 +34,12 @@ class AddrController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(AddrRequest $request)
-    {
-        $user = $request->user();        
+    {        
+        $user = $request->user();     
+        
+        //dd($user);
 
-        if($user->admin)
-        {
-            $addr = Addr::create($request->input('data.attributes'));
-            return new AddrResource($addr);
-        }            
-
-        if($user->id == $request->input('data.attributes.registered_user_id'))
+        if($user->admin or ($user->id == $request->input('data.attributes.user_id')))
         {
             $addr = Addr::create($request->input('data.attributes'));
             return new AddrResource($addr);

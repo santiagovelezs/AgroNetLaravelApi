@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RegisteredUser extends UserRole
+class User extends UserRole
 {
     use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
 
@@ -57,18 +57,18 @@ class RegisteredUser extends UserRole
     }
 
     public function admin()
-    {
-        return $this->hasOne(Admin::class);
+    {       
+        return $this->hasOne(Admin::class, 'id');
     }
 
     public function producer()
     {
-        return $this->hasOne(Producer::class);
+        return $this->hasOne(Producer::class, 'id');
     }
 
     public function addrs()
     {
-        return $this->hasMany(Addr::class);
+        return $this->hasMany(Addr::class, 'user_id');
     }
 
     public function setPasswordAttribute($password)

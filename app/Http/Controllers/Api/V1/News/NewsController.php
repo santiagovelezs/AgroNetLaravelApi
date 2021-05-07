@@ -8,7 +8,7 @@ use App\Models\News;
 use App\Http\Requests\api\v1\NewsRequest;
 use App\Http\Resources\Api\V1\NewsResource;
 use App\Http\Resources\Api\V1\NewsResourceCollection;
-use App\Models\RegisteredUser;
+use App\Models\User;
 
 class NewsController extends Controller
 {
@@ -34,10 +34,10 @@ class NewsController extends Controller
     {
         $user = $request->user();         
 
-        if($user->admin or ($user->id == $request->input('data.attributes.user_id')))
+        if($user->admin or ($user->id == $request->input('data.attributes.producer_id')))
         {
             $news = new News();
-            $news->producer_id = RegisteredUser::find($request->input('data.attributes.user_id'))->producer->id;
+            $news->producer_id = User::find($request->input('data.attributes.producer_id'))->producer->id;
             $news->title = $request->input('data.attributes.title'); 
             $news->content = $request->input('data.attributes.content');            
             $news->save();

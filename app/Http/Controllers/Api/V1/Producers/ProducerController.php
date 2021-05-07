@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Producers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\RegisteredUser;
+use App\Models\User;
 use App\Http\Requests\api\v1\ProducerRequest;
 use App\Http\Resources\Api\V1\ProducerResource;
 use App\Http\Resources\Api\V1\EventResourceCollection;
@@ -19,17 +19,15 @@ class ProducerController extends Controller
    
     public function store(ProducerRequest $request)
     {
-        $user = $request->user();        
+        $user = $request->user();     
 
-        if($user->admin)
+        if($user->admin or $user->id == $request->input('data.attributes.id'))
         {
-            $producer = Producer::create($request->input('data.attributes'));
-            return new ProducerResource($producer);
-        } 
-
-        if($user->id == $request->input('data.attributes.registered_user_id'))
-        {
-            $producer = Producer::create($request->input('data.attributes'));
+            //$producer = Producer::create($request->input('data.attributes'));
+            $producer = new Producer();
+            $producer->id = $request->input('data.attributes.id');
+            $producer->sede_ppal = $request->input('data.attributes.sede_ppal');
+            $producer->save();
             return new ProducerResource($producer);
         }       
 
@@ -43,7 +41,7 @@ class ProducerController extends Controller
     {
         if($request->user()->admin)
         {
-            $user = RegisteredUser::find($id);
+            $user = User::find($id);
             $producer = $user->producer;
 
             if($producer)
@@ -59,7 +57,7 @@ class ProducerController extends Controller
             
         }
 
-        if($request->user()->producer->registered_user_id == $id)
+        if($request->user()->producer->id == $id)
         {
             return new ProducerResource($request->user()->producer);
         }
@@ -81,7 +79,7 @@ class ProducerController extends Controller
 
     public function events($id)
     {
-        $user = RegisteredUser::find($id);      
+        $user = User::find($id);      
         $producer = $user->producer;
         if($producer)
         {

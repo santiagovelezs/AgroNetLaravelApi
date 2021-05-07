@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Api;
 
-use App\Models\RegisteredUser;
+use App\Models\User;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
@@ -42,7 +42,7 @@ class GeoLocationTest extends TestCase
     public function test_StoreGeoAsAdmin()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );           
         
         $response = $this->post('api/v1/geo-locations', $this->getStoreRequest(8));                     
@@ -55,7 +55,7 @@ class GeoLocationTest extends TestCase
     public function test_StoreGeoAsProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(5)            
+            User::find(5)            
         );           
         
         $response = $this->post('api/v1/geo-locations', $this->getStoreRequest(8));                     

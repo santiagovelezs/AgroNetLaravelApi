@@ -28,7 +28,7 @@ class ProducerRequest extends FormRequest
             'data.type' => ['required'],
             'data.attributes' => ['required', 'array'],
             'data.attributes.sede_ppal' => ['nullable', 'string', 'max:255'],
-            'data.attributes.registered_user_id' => ['required', 'numeric', 'unique:producers,registered_user_id', 'exists:registered_users,id']
+            'data.attributes.id' => ['required', 'numeric', 'unique:producers,id', 'exists:users,id']
         ];
     }
 }

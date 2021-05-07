@@ -16,11 +16,11 @@ class ProducerSeed extends Seeder
     public function run()
     {
         DB::table('producers')->insert([
-            'registered_user_id'=>2,
+            'id'=>2,
         ]);
 
         DB::table('producers')->insert([
-            'registered_user_id'=>3,
+            'id'=>3,
         ]);
     }
 }

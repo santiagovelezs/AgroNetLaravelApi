@@ -17,7 +17,7 @@ class AddrSeeder extends Seeder
         //pte registrar geo
         //geo { lt:5.068089598694797, lng:-75.51734696649181 }
         DB::table('addrs')->insert([
-            'registered_user_id'=>2,
+            'user_id'=>2,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -29,7 +29,7 @@ class AddrSeeder extends Seeder
         //pte registrar geo
         //geo { lt:5.069790527364546, lng:-75.51875261140086 }
         DB::table('addrs')->insert([
-            'registered_user_id'=>2,
+            'user_id'=>2,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -41,7 +41,7 @@ class AddrSeeder extends Seeder
         //pte registrar geo
         //geo { lt:5.067615140686897, lng:-75.51274565352365 }
         DB::table('addrs')->insert([
-            'registered_user_id'=>2,
+            'user_id'=>2,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -53,7 +53,7 @@ class AddrSeeder extends Seeder
         //pte registrar geo
         //geo { lt:5.068293912359735, lng:-75.5122080500452 }
         DB::table('addrs')->insert([
-            'registered_user_id'=>2,
+            'user_id'=>2,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -65,7 +65,7 @@ class AddrSeeder extends Seeder
         //pte registrar geo
         //geo { lt:5.067701374425539, lng:-75.51069474949153 }
         DB::table('addrs')->insert([
-            'registered_user_id'=>3,
+            'user_id'=>3,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -77,7 +77,7 @@ class AddrSeeder extends Seeder
         //pte registrar geo
         //geo { lt:5.065263429967828, lng:-75.49921421417056 }
         DB::table('addrs')->insert([
-            'registered_user_id'=>3,
+            'user_id'=>3,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -89,7 +89,7 @@ class AddrSeeder extends Seeder
          //pte registrar geo
         //geo { lt:5.048761667038207, lng:-75.476811261513 }
         DB::table('addrs')->insert([
-            'registered_user_id'=>3,
+            'user_id'=>3,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -100,7 +100,7 @@ class AddrSeeder extends Seeder
 
         // ID 8
         DB::table('addrs')->insert([
-            'registered_user_id'=>5,
+            'user_id'=>5,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -111,7 +111,7 @@ class AddrSeeder extends Seeder
 
         // ID 9
         DB::table('addrs')->insert([
-            'registered_user_id'=>4,
+            'user_id'=>4,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',
@@ -122,7 +122,7 @@ class AddrSeeder extends Seeder
 
         // ID 10
         DB::table('addrs')->insert([
-            'registered_user_id'=>5,
+            'user_id'=>5,
             'country'=>'Colombia',
             'province'=>'caldas',
             'city'=>'Manizales',

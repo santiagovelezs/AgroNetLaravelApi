@@ -15,7 +15,7 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('producer_id');
             $table->foreignId('addr_id');
             $table->date('fecha');
             $table->time('hora');
@@ -23,7 +23,7 @@ class CreateEventsTable extends Migration
             $table->enum('state', ['pendiente','en_curso','cancelado','terminado'])->default('pendiente');
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('producer_id')
                 ->references('id')->on('producers')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

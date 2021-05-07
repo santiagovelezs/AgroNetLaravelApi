@@ -16,17 +16,17 @@ class Addr extends Model
         'street',
         'location',
         'etiqueta',
-        'registered_user_id'
+        'user_id'
     ];
 
     public function scopeOwnedBy($query, $user_id)
     {
-        return $query->where('registered_user_id', '=', $user_id);
+        return $query->where('user_id', '=', $user_id);
     }
 
     public function owner()
     {
-        return $this->belongsTo(RegisteredUser::class, 'registered_user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function geoLocation()

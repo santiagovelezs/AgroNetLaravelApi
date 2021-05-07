@@ -38,30 +38,18 @@ class EventController extends Controller
     public function store(EventRequest $request)
     {
         $user = $request->user();
-
-        if($user->admin)
-        {           
-            $event = Event::create($request->input('data.attributes'));
-            return new EventResource($event);           
-        }  
-        //dd($user->producer->id);
-        if($user->producer->registered_user_id == $request->input('data.attributes.user_id'))
+        
+        if($user->admin or $user->id == $request->input('data.attributes.producer_id'))
         {
-            $addr = $user->addrs()->find($request->input('data.attributes.addr_id'));
-            //dd($addr);
-            if($addr)
-            {
-                $event = Event::create($request->input('data.attributes'));
-                return new EventResource($event);
-            }
-            else
-            {
-                return response()->json([
-                    'message' => 'Unauthorized',
-                    'details' => 'invalid Addr',
-                    ], 401); 
-            }
-           
+            //$event = Event::create($request->input('data.attributes'));
+            $event = new Event();
+            $event->producer_id = $request->input('data.attributes.producer_id');
+            $event->addr_id = $request->input('data.attributes.addr_id');
+            $event->fecha = $request->input('data.attributes.fecha');
+            $event->hora = $request->input('data.attributes.hora');
+            $event->duracion = $request->input('data.attributes.duracion');
+            $event->save();
+            return new EventResource($event);           
         }       
 
         return response()->json([

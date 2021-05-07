@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Api;
 
-use App\Models\RegisteredUser;
+use App\Models\User;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
@@ -13,7 +13,8 @@ class ProducerTest extends TestCase
             'type',
             'id',
             'attributes' => [
-                'sede_ppal'
+                'sede_ppal',
+                'id'
             ],
             'relationships',
             'links'          
@@ -39,7 +40,7 @@ class ProducerTest extends TestCase
     public function test_StoreProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(6)            
+            User::find(6)            
         );
 
         $user_id = 6;       
@@ -53,7 +54,7 @@ class ProducerTest extends TestCase
     public function test_UserStoreProducerOtherId()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(5)            
+            User::find(5)            
         );
 
         $user_id = 6;       
@@ -66,7 +67,7 @@ class ProducerTest extends TestCase
     public function test_ShowMyProducerData()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(3)            
+            User::find(3)            
         );
 
         $response = $this->get('api/v1/producers/3');
@@ -79,7 +80,7 @@ class ProducerTest extends TestCase
     public function test_ShowNotBelongsProducerData()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(3)            
+            User::find(3)            
         );
 
         $response = $this->get('api/v1/producers/4');
@@ -91,7 +92,7 @@ class ProducerTest extends TestCase
     public function test_ShowProducerDataAsAdmin()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );
 
         $response = $this->get('api/v1/producers/3');
@@ -108,7 +109,7 @@ class ProducerTest extends TestCase
                 "type" => "Producer",
                 "attributes" => [                            
                     "sede_papal" => null,
-                    "registered_user_id" => $user_id
+                    "id" => $user_id
                 ]                        
             ]
         ];

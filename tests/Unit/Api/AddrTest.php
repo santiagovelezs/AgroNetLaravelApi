@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Api;
 
-use App\Models\RegisteredUser;
+use App\Models\User;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +15,7 @@ class AddrTest extends TestCase
             'type',
             'id',
             'attributes' => [
-                'registered_user_id',
+                'user_id',
                 'country',
                 'province',
                 'city',
@@ -48,7 +48,7 @@ class AddrTest extends TestCase
     public function test_StoreAddrAsAdmin()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );           
         
         $response = $this->post('api/v1/addrs', $this->getStoreRequest(5));                     
@@ -62,7 +62,7 @@ class AddrTest extends TestCase
     public function test_StoreAddrAsProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(2)            
+            User::find(2)            
         );           
         
         $response = $this->post('api/v1/addrs', $this->getStoreRequest(2));
@@ -76,7 +76,7 @@ class AddrTest extends TestCase
     public function test_StoreAddrNotBelongsAsProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(2)            
+            User::find(2)            
         );           
         
         $response = $this->post('api/v1/addrs', $this->getStoreRequest(3));                     
@@ -88,7 +88,7 @@ class AddrTest extends TestCase
     public function test_StoreAddrAsUser()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(4)            
+            User::find(4)            
         );           
         
         $response = $this->post('api/v1/addrs', $this->getStoreRequest(4));                     
@@ -102,7 +102,7 @@ class AddrTest extends TestCase
     public function test_StoreAddrNotBelongsAsUser()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(4)            
+            User::find(4)            
         );           
         
         $response = $this->post('api/v1/addrs', $this->getStoreRequest(5));                     
@@ -114,7 +114,7 @@ class AddrTest extends TestCase
     public function test_getAddrAsAdmin()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );           
         
         $response = $this->get('api/v1/addrs/1');                     
@@ -127,7 +127,7 @@ class AddrTest extends TestCase
     public function test_getAddrNotBelongsAsProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(2)            
+            User::find(2)            
         );           
         
         $response = $this->get('api/v1/addrs/5');                     
@@ -138,7 +138,7 @@ class AddrTest extends TestCase
     public function test_getGeoByAddrAsAdmin()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );           
         
         $response = $this->get('api/v1/addrs/5/geo-location');                     
@@ -149,7 +149,7 @@ class AddrTest extends TestCase
     public function test_getGeoByAddrNotBelongsAsProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(2)            
+            User::find(2)            
         );           
         
         $response = $this->get('api/v1/addrs/5/geo-location');                     
@@ -160,7 +160,7 @@ class AddrTest extends TestCase
     public function test_getGeoByAddrAsProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(2)            
+            User::find(2)            
         );           
         
         $response = $this->get('api/v1/addrs/3/geo-location');                     
@@ -168,13 +168,13 @@ class AddrTest extends TestCase
         $response->assertJsonStructure($this::jsonStructure); 
     }
 
-    private function getStoreRequest($registered_user_id)
+    private function getStoreRequest($user_id)
     {
         return [
             "data" => [
                 "type" => "Address",
                 "attributes" => [                            
-                    "registered_user_id" => $registered_user_id,
+                    "user_id" => $user_id,
                     "country" => "Colombia",
                     "province" => "Caldas",
                     "city"=> "Salamina",

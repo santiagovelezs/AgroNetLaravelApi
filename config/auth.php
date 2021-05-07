@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'registered_users',
+        'passwords' => 'users',
     ],
 
     /*
@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'registered_users',
+            'provider' => 'users',
         ],
 
         'api' => [
             'driver' => 'sanctum',
-            'provider' => 'registered_users',
+            'provider' => 'users',
             'hash' => false,
         ],
     ],
@@ -66,15 +66,15 @@ return [
     */
 
     'providers' => [
-        'registered_users' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\RegisteredUser::class,
+            'model' => App\Models\User::class,
         ],
 
-        'users' => [
-            'driver' => 'database',
-            'table' => 'registered_users',
-        ],
+        // 'users' => [
+        //     'driver' => 'database',
+        //     'table' => 'users',
+        // ],
     ],
 
     /*
@@ -93,8 +93,8 @@ return [
     */
 
     'passwords' => [
-        'registered_users' => [
-            'provider' => 'registered_users',
+        'users' => [
+            'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
