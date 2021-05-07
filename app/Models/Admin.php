@@ -4,6 +4,10 @@ namespace App\Models;
 
 class Admin extends User
 {
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+    
     public function hasType($role)
     {       
         return true;        

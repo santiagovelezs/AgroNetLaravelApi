@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class AddrResourceCollection extends ResourceCollection
+class ProducerResourceCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,8 +15,8 @@ class AddrResourceCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'links' => [                
-                'self' => $request->id?route('api.v1.user.addrs', $request->id):route('api.v1.api.v1.addrs.index')
+            'links' => [
+                'self' => route('api.v1.producers.index')
             ],
             'meta' => [
                 'count' => $this->collection->count()

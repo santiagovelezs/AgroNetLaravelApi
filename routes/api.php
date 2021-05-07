@@ -19,15 +19,14 @@ use App\Models\Role;
     return $request->user();
 });*/
 
-
-//Doing Refactor
 Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     
     Route::post('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'login']);
    
     Route::post('users', [App\Http\Controllers\Api\V1\Users\RegisteredUserController::class, 'store']);
 
-    Route::get('events', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'index']); 
+    Route::get('events', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'index'])
+                ->name('events'); 
     
     Route::get('events/{id}', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'show']); 
 
@@ -35,9 +34,10 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('events/{id}/geo-location', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'geoLocation']);
     
-    Route::get('producers/{id}/events', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'events']);
+    Route::get('producers/{id}/events', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'events'])
+                    ->name('producer.events');
 
-    Route::get('events/geo/{lt}/{lng}/{val}', [App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class, 'circundantes']);
+    Route::get('geo/{lt}/{lng}/{val}', [App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class, 'circundantes']);
 
     Route::get('events/{lt}/{lng}/{val}', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'circundantes']);
 
@@ -49,10 +49,11 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::delete('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);
         Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class)->only('store');
         Route::apiResource('users', App\Http\Controllers\Api\V1\Users\RegisteredUserController::class)->except(['store','index']);
-        Route::get('users/{id}/addrs', [App\Http\Controllers\Api\V1\Users\RegisteredUserController::class, 'addrs']);
+        Route::get('users/{id}/addrs', [App\Http\Controllers\Api\V1\Users\RegisteredUserController::class, 'addrs'])
+                    ->name('user.addrs');
         Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class)->only(['store', 'show', 'update', 'destroy']);
         Route::get('addrs/{id}/geo-location', [App\Http\Controllers\Api\V1\Addrs\AddrController::class, 'geoLocation']);    
-        Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class)->only(['store']);    
+        Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class)->only(['store', 'show']);    
         
     });
 
