@@ -15,7 +15,7 @@ class AddrTest extends TestCase
             'type',
             'id',
             'attributes' => [
-                'registered_user_id',
+                'user_id',
                 'country',
                 'province',
                 'city',
@@ -168,13 +168,13 @@ class AddrTest extends TestCase
         $response->assertJsonStructure($this::jsonStructure); 
     }
 
-    private function getStoreRequest($registered_user_id)
+    private function getStoreRequest($user_id)
     {
         return [
             "data" => [
                 "type" => "Address",
                 "attributes" => [                            
-                    "registered_user_id" => $registered_user_id,
+                    "user_id" => $user_id,
                     "country" => "Colombia",
                     "province" => "Caldas",
                     "city"=> "Salamina",

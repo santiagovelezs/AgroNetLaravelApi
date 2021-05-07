@@ -18,7 +18,8 @@ class ProducerResource extends JsonResource
             'type' => 'Producer',
             'id' => $this->id,
             'attributes' => [
-                'sede_ppal' => $this->sede_ppal
+                'sede_ppal' => $this->sede_ppal,
+                'id' => $this->id
             ],
             'relationships' => [
             ],

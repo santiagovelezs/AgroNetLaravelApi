@@ -9,7 +9,7 @@ class Producer extends RegisteredUser
     protected $fillable = [
 
         'sede_ppal',
-        'registered_user_id'
+        'id'
     ];
 
     public function hasType($role)
@@ -23,7 +23,7 @@ class Producer extends RegisteredUser
 
     public function owner()
     {
-        return $this->belongsTo(RegisteredUser::class, 'registered_user_id');
+        return $this->belongsTo(RegisteredUser::class, 'id');
     }
 
     public function events()
@@ -33,7 +33,7 @@ class Producer extends RegisteredUser
 
     public function news()
     {
-        return $this->hasMany(News::class);
+        return $this->hasMany(News::class, 'producer_id');
     }
 
 }

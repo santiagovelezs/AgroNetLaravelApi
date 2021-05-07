@@ -34,16 +34,12 @@ class AddrController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(AddrRequest $request)
-    {
-        $user = $request->user();        
+    {        
+        $user = $request->user();     
+        
+        //dd($user);
 
-        if($user->admin)
-        {
-            $addr = Addr::create($request->input('data.attributes'));
-            return new AddrResource($addr);
-        }            
-
-        if($user->id == $request->input('data.attributes.registered_user_id'))
+        if($user->admin or ($user->id == $request->input('data.attributes.user_id')))
         {
             $addr = Addr::create($request->input('data.attributes'));
             return new AddrResource($addr);

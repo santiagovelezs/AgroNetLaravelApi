@@ -166,9 +166,8 @@ class EventTest extends TestCase
         return [
             "data" => [
                 "type" => "Event",
-                "attributes" => [                            
-                    "sede_papal" => null,
-                    "user_id" => $producer_id,
+                "attributes" => [                   
+                    "producer_id" => $producer_id,
                     'addr_id' => $addr_id,
                     'fecha' => '2020/10/19',
                     'hora' => '17:00',

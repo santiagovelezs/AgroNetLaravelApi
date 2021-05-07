@@ -57,18 +57,18 @@ class RegisteredUser extends UserRole
     }
 
     public function admin()
-    {
-        return $this->hasOne(Admin::class);
+    {       
+        return $this->hasOne(Admin::class, 'id');
     }
 
     public function producer()
     {
-        return $this->hasOne(Producer::class);
+        return $this->hasOne(Producer::class, 'id');
     }
 
     public function addrs()
     {
-        return $this->hasMany(Addr::class);
+        return $this->hasMany(Addr::class, 'user_id');
     }
 
     public function setPasswordAttribute($password)

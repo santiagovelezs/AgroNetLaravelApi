@@ -13,7 +13,7 @@ class NewsTest extends TestCase
             'type',
             'id',
             'attributes' => [
-                'user_id',
+                'producer_id',
                 'title',
                 'content',                
                 'created_at',
@@ -84,7 +84,7 @@ class NewsTest extends TestCase
             'data' => [
                 'type' => 'News',
                 'attributes' => [                       
-                    'user_id' => $user_id,                        
+                    'producer_id' => $user_id,                        
                     'title' => 'title',                    
                     'content' => 'content'                    
                 ]                        

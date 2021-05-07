@@ -18,7 +18,7 @@ class AddrResource extends JsonResource
             'type' => 'addr',
             'id' => $this->id,
             'attributes' => [
-                'registered_user_id' => $this->registered_user_id,
+                'user_id' => $this->user_id,
                 'country' => $this->country,
                 'province' => $this->province,
                 'city' => $this->city,

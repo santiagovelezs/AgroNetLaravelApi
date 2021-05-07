@@ -20,7 +20,7 @@ class EnsureUserHasRole
      * @return mixed
      */
     public function handle(Request $request, Closure $next, $role)
-    {
+    {        
         $user = new PublicUser();       
         $user->addRole($request->user()); // Add Reg User Role            
         if($request->user()->admin)

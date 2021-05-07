@@ -34,10 +34,10 @@ class NewsController extends Controller
     {
         $user = $request->user();         
 
-        if($user->admin or ($user->id == $request->input('data.attributes.user_id')))
+        if($user->admin or ($user->id == $request->input('data.attributes.producer_id')))
         {
             $news = new News();
-            $news->producer_id = RegisteredUser::find($request->input('data.attributes.user_id'))->producer->id;
+            $news->producer_id = RegisteredUser::find($request->input('data.attributes.producer_id'))->producer->id;
             $news->title = $request->input('data.attributes.title'); 
             $news->content = $request->input('data.attributes.content');            
             $news->save();

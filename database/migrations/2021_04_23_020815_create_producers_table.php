@@ -13,14 +13,13 @@ class CreateProducersTable extends Migration
      */
     public function up()
     {
-        Schema::create('producers', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('registered_user_id')->unique();
+        Schema::create('producers', function (Blueprint $table) {            
+            $table->foreignId('id')->primary();
             $table->foreignId('sede_ppal')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('registered_user_id')
+            $table->foreign('id')
                 ->references('id')->on('registered_users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

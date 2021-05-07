@@ -11,6 +11,6 @@ class Admin extends RegisteredUser
 
     public function owner()
     {
-        return $this->belongsTo(RegisteredUser::class, 'registered_user_id');
+        return $this->belongsTo(RegisteredUser::class, 'user_id');
     }
 }

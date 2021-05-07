@@ -15,7 +15,7 @@ class CreateAddrsTable extends Migration
     {
         Schema::create('addrs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('registered_user_id');
+            $table->foreignId('user_id');
             $table->string('country', 50)->default('Colombia');
             $table->string('province', 50);
             $table->string('city', 50);
@@ -24,7 +24,7 @@ class CreateAddrsTable extends Migration
             $table->string('etiqueta', 50)->nullable();
             $table->timestamps();
 
-            $table->foreign('registered_user_id')
+            $table->foreign('user_id')
                 ->references('id')->on('registered_users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
