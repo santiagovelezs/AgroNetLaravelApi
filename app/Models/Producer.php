@@ -6,10 +6,14 @@ namespace App\Models;
 
 class Producer extends User
 {
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+
     protected $fillable = [
 
-        'sede_ppal',
-        'id'
+        'id',
+        'sede_ppal'        
     ];
 
     public function hasType($role)

@@ -16,7 +16,7 @@ class EventResourceCollection extends ResourceCollection
     {
         return [
             'links' => [
-                'self' => 'route()'
+                'self' => $request->id?route('api.v1.producer.events', $request->id):route('api.v1.events')
             ],
             'meta' => [
                 'count' => $this->collection->count()

@@ -36,7 +36,7 @@ class EventResource extends JsonResource
                 ]
             ],
             'links' => [
-                'self' => 'route()'
+                'self' => route('api.v1.events.show', $this->id)
             ]
         ];
     }

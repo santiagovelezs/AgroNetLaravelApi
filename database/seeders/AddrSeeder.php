@@ -103,10 +103,10 @@ class AddrSeeder extends Seeder
             'user_id'=>5,
             'country'=>'Colombia',
             'province'=>'caldas',
-            'city'=>'Manizales',
-            'street'=>'Cr 23 Transversal 72',
-            'location'=>'Mirador Niza',
-            'etiqueta'=>'Mirador Niza'
+            'city'=>'Chinchina',
+            'street'=>'Cl 8',
+            'location'=>'Parque Ppal Chinchina',
+            'etiqueta'=>'Parque'
         ]);
 
         // ID 9
@@ -114,10 +114,10 @@ class AddrSeeder extends Seeder
             'user_id'=>4,
             'country'=>'Colombia',
             'province'=>'caldas',
-            'city'=>'Manizales',
-            'street'=>'Cr 23 Transversal 72',
-            'location'=>'Mirador Niza',
-            'etiqueta'=>'Mirador Niza'
+            'city'=>'Palestina',
+            'street'=>'Cl 17',
+            'location'=>'tanque palestina',
+            'etiqueta'=>'Tanque'
         ]);
 
         // ID 10
@@ -125,10 +125,10 @@ class AddrSeeder extends Seeder
             'user_id'=>5,
             'country'=>'Colombia',
             'province'=>'caldas',
-            'city'=>'Manizales',
-            'street'=>'Cr 23 Transversal 72',
-            'location'=>'Mirador Niza',
-            'etiqueta'=>'Mirador Niza'
+            'city'=>'Villamaria',
+            'street'=>'Cr 27',
+            'location'=>'Alcaldia Villamaria',
+            'etiqueta'=>'Alcaldia Villamaria'
         ]);
     }
 }

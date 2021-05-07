@@ -71,7 +71,7 @@ class GeoLocationTest extends TestCase
         $lngPlazaBolivarMzles = -75.51735301643926;
         $radio = 0.5; //500 metros
         
-        $response = $this->get('api/v1/events/geo/'.$ltPlazaBolivarMzles.'/'.$lngPlazaBolivarMzles.'/'.$radio); 
+        $response = $this->get('api/v1/geo/'.$ltPlazaBolivarMzles.'/'.$lngPlazaBolivarMzles.'/'.$radio); 
         
         $response->assertStatus(200);       
 
@@ -86,7 +86,7 @@ class GeoLocationTest extends TestCase
         $lngRioBlanco = -75.43064233704608;
         $radio = 2; //2 km
         
-        $response = $this->get('api/v1/events/geo/'.$ltRioBlanco.'/'.$lngRioBlanco.'/'.$radio); 
+        $response = $this->get('api/v1/geo/'.$ltRioBlanco.'/'.$lngRioBlanco.'/'.$radio); 
         
         $response->assertStatus(200);       
 

@@ -37,5 +37,12 @@ class NewsSeeder extends Seeder
             'title'=>'Nuevos Productos',
             'content'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus massa purus, sed lacinia nisi eleifend at.'            
         ]);
+
+
+        DB::table('news')->insert([
+            'producer_id'=>3,
+            'title'=>'Nuevos Productos 02',
+            'content'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus massa purus, sed lacinia nisi eleifend at.'            
+        ]);
     }
 }

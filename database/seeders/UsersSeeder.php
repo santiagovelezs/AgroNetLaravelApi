@@ -78,5 +78,55 @@ class UsersSeeder extends Seeder
             'telefono'=>$faker->phoneNumber(),
         ]);
 
+        DB::table('users')->insert([
+            'nombre'=> 'test',
+            'apellido'=>'01',
+            'email'=>'test01@mail.es',
+            'password'=> Hash::make('hola123'),
+            'departamento'=>$faker->state(),
+            'ciudad'=>$faker->city(),
+            'telefono'=>$faker->phoneNumber(),
+        ]);
+
+        DB::table('users')->insert([
+            'nombre'=> 'test',
+            'apellido'=>'02',
+            'email'=>'test02@mail.es',
+            'password'=> Hash::make('hola123'),
+            'departamento'=>$faker->state(),
+            'ciudad'=>$faker->city(),
+            'telefono'=>$faker->phoneNumber(),
+        ]);
+
+        DB::table('users')->insert([
+            'nombre'=> 'test',
+            'apellido'=>'03',
+            'email'=>'test03@mail.es',
+            'password'=> Hash::make('hola123'),
+            'departamento'=>$faker->state(),
+            'ciudad'=>$faker->city(),
+            'telefono'=>$faker->phoneNumber(),
+        ]);
+
+        DB::table('users')->insert([
+            'nombre'=> 'test',
+            'apellido'=>'04',
+            'email'=>'test04@mail.es',
+            'password'=> Hash::make('hola123'),
+            'departamento'=>$faker->state(),
+            'ciudad'=>$faker->city(),
+            'telefono'=>$faker->phoneNumber(),
+        ]);
+
+        DB::table('users')->insert([
+            'nombre'=> 'test',
+            'apellido'=>'05',
+            'email'=>'test05@mail.es',
+            'password'=> Hash::make('hola123'),
+            'departamento'=>$faker->state(),
+            'ciudad'=>$faker->city(),
+            'telefono'=>$faker->phoneNumber(),
+        ]);
+
     }
 }

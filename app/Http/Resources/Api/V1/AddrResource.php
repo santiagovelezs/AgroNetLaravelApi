@@ -37,7 +37,7 @@ class AddrResource extends JsonResource
                 ]
             ],
             'links' => [
-                'self' => 'route()'
+                'self' => route('api.v1.addrs.show', $this->id)
             ]
         ];
     }
