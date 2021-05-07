@@ -19,7 +19,7 @@ class CreateAdminsTable extends Migration
             $table->softDeletes();
 
             $table->foreign('id')
-                ->references('id')->on('registered_users')
+                ->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
         });

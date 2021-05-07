@@ -4,7 +4,7 @@ namespace Tests\Unit\Api;
 
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
-use App\Models\RegisteredUser;
+use App\Models\User;
 
 class EventTest extends TestCase
 {
@@ -61,7 +61,7 @@ class EventTest extends TestCase
     public function test_StoreEventAsProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(2)            
+            User::find(2)            
         );
 
         $producer_id = 2;
@@ -78,7 +78,7 @@ class EventTest extends TestCase
     public function test_StoreEventAsAdmin()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );
 
         $user_id = 2;
@@ -95,7 +95,7 @@ class EventTest extends TestCase
     public function test_StoreEventAsRegisteredUser()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(5)            
+            User::find(5)            
         );
 
         $producer_id = 2;

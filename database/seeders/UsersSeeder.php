@@ -18,7 +18,7 @@ class UsersSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
 
-        DB::table('registered_users')->insert([
+        DB::table('users')->insert([
                 'nombre'=> 'Admin',
                 'apellido'=>'Super Admin',
                 'email'=>'admin@mail.es',
@@ -28,7 +28,7 @@ class UsersSeeder extends Seeder
                 'telefono'=>$faker->phoneNumber(),
         ]);
 
-        DB::table('registered_users')->insert([
+        DB::table('users')->insert([
             'nombre'=> 'Producer',
             'apellido'=>'01',
             'email'=>'producer01@mail.es',
@@ -38,7 +38,7 @@ class UsersSeeder extends Seeder
             'telefono'=>$faker->phoneNumber(),
         ]);
 
-        DB::table('registered_users')->insert([
+        DB::table('users')->insert([
             'nombre'=> 'Producer',
             'apellido'=>'02',
             'email'=>'producer02@mail.es',
@@ -48,7 +48,7 @@ class UsersSeeder extends Seeder
             'telefono'=>$faker->phoneNumber(),
         ]);
 
-        DB::table('registered_users')->insert([
+        DB::table('users')->insert([
             'nombre'=> 'user',
             'apellido'=>'01',
             'email'=>'user01@mail.es',
@@ -58,7 +58,7 @@ class UsersSeeder extends Seeder
             'telefono'=>$faker->phoneNumber(),
         ]);
 
-        DB::table('registered_users')->insert([
+        DB::table('users')->insert([
             'nombre'=> 'user',
             'apellido'=>'02',
             'email'=>'user02@mail.es',
@@ -68,7 +68,7 @@ class UsersSeeder extends Seeder
             'telefono'=>$faker->phoneNumber(),
         ]);
 
-        DB::table('registered_users')->insert([
+        DB::table('users')->insert([
             'nombre'=> 'user',
             'apellido'=>'03',
             'email'=>'user03@mail.es',

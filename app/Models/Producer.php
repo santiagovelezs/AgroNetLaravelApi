@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 namespace App\Models;
 
-class Producer extends RegisteredUser
+class Producer extends User
 {
     protected $fillable = [
 
@@ -23,7 +23,7 @@ class Producer extends RegisteredUser
 
     public function owner()
     {
-        return $this->belongsTo(RegisteredUser::class, 'id');
+        return $this->belongsTo(User::class, 'id');
     }
 
     public function events()

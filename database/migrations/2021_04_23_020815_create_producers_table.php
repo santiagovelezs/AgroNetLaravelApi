@@ -20,7 +20,7 @@ class CreateProducersTable extends Migration
             $table->softDeletes();
 
             $table->foreign('id')
-                ->references('id')->on('registered_users')
+                ->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreign('sede_ppal')

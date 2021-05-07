@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Admin;
 use App\Models\Producer;
 use App\Models\Role;
-use App\Models\RegisteredUser;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\PublicUser;

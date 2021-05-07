@@ -9,7 +9,7 @@ use App\Models\Addr;
 use App\Http\Resources\Api\V1\AddrResource;
 use App\Http\Resources\Api\V1\AddrResourceCollection;
 use App\Http\Resources\Api\V1\GeoLocationResource;
-use App\Models\RegisteredUser;
+use App\Models\User;
 use App\Models\GeoLocation;
 
 class AddrController extends Controller

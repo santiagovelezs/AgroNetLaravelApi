@@ -2,7 +2,7 @@
 use Illuminate\Support\Collection;
 namespace App\Models;
 
-class Admin extends RegisteredUser
+class Admin extends User
 {
     public function hasType($role)
     {       
@@ -11,6 +11,6 @@ class Admin extends RegisteredUser
 
     public function owner()
     {
-        return $this->belongsTo(RegisteredUser::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

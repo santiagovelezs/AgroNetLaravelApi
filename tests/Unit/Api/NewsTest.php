@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Api;
 
-use App\Models\RegisteredUser;
+use App\Models\User;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
@@ -51,7 +51,7 @@ class NewsTest extends TestCase
     public function test_StoreNewsAsProducer()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(2)            
+            User::find(2)            
         );
 
         $user_id = 2;        
@@ -66,7 +66,7 @@ class NewsTest extends TestCase
     public function test_StoreNewsAsAdmin()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );
 
         $user_id = 2;        

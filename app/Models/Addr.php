@@ -26,7 +26,7 @@ class Addr extends Model
 
     public function owner()
     {
-        return $this->belongsTo(RegisteredUser::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function geoLocation()

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Api;
 
-use App\Models\RegisteredUser;
+use App\Models\User;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\Facades\Hash;
@@ -100,7 +100,7 @@ class UserTest extends TestCase
     public function test_UserLogout()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );
 
         $response = $this->delete('api/v1/auth');
@@ -113,7 +113,7 @@ class UserTest extends TestCase
     public function test_getUser()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(3)            
+            User::find(3)            
         );
 
         $response = $this->get('api/v1/users/3');
@@ -127,7 +127,7 @@ class UserTest extends TestCase
     public function test_getNoAuthorizedUser()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(2)            
+            User::find(2)            
         );
 
         $response = $this->get('api/v1/users/3');
@@ -139,7 +139,7 @@ class UserTest extends TestCase
     public function test_getUserAsAdmin()
     {
         Sanctum::actingAs(
-            RegisteredUser::find(1)            
+            User::find(1)            
         );
 
         $response = $this->get('api/v1/users/3');

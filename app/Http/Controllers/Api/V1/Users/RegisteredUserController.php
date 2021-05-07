@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\RegisteredUser;
+use App\Models\User;
 use App\Http\Requests\api\v1\UserRequest;
 use App\Http\Requests\api\v1\UserEditRequest;
 use App\Http\Resources\Api\V1\UserResource;
@@ -16,14 +16,14 @@ class RegisteredUserController extends Controller
 {    
     public function index(Request $request)
     {
-        $users = RegisteredUser::simplePaginate(25);
+        $users = User::simplePaginate(25);
         
         return new UserResourceCollection($users);
     }
     
     public function store(UserRequest $request)
     {
-        $user = RegisteredUser::create($request->input('data.attributes'));
+        $user = User::create($request->input('data.attributes'));
 
         return new UserResource($user);
 
@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
     {
         if($request->user()->admin)
         {
-            $user = RegisteredUser::find($id);
+            $user = User::find($id);
 
             if($user)
             {
@@ -68,7 +68,7 @@ class RegisteredUserController extends Controller
     {
         if($request->user()->admin)
         {            
-            $user = RegisteredUser::find($id);
+            $user = User::find($id);
             if($user)
             {
                 $upd = $user->update($request->input('data.attributes'));
@@ -85,7 +85,7 @@ class RegisteredUserController extends Controller
 
         if($request->user()->id == $id)
         {
-            $user = RegisteredUser::find($id);
+            $user = User::find($id);
             $upd = $user->update($request->input('data.attributes'));
             $user->refresh();
             return new UserResource($user);
@@ -101,7 +101,7 @@ class RegisteredUserController extends Controller
     {
         if($request->user()->admin)
         {            
-            $user = RegisteredUser::find($id);
+            $user = User::find($id);
             if($user)
             {
                 $user->delete();
@@ -130,12 +130,12 @@ class RegisteredUserController extends Controller
     {
         if($request->user()->admin)
         {
-            $addrs = Addr::where('registered_user_id', $id)->get();
+            $addrs = Addr::where('user_id', $id)->get();
             return new AddrResourceCollection($addrs);
         }
         if($request->user()->id == $id)
         {
-            $addrs = Addr::where('registered_user_id', $id)->get();
+            $addrs = Addr::where('user_id', $id)->get();
             return new AddrResourceCollection($addrs);
         }
 

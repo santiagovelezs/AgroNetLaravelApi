@@ -28,7 +28,7 @@ class AddrRequest extends FormRequest
             'data' => ['required', 'array'],
             'data.type' => ['required'],
             'data.attributes' => ['required', 'array'],
-            'data.attributes.user_id' => ['required', 'exists:registered_users,id'],
+            'data.attributes.user_id' => ['required', 'exists:users,id'],
             'data.attributes.country' => ['required', 'string', 'max:255'],
             'data.attributes.province' => ['required', 'string', 'max:255'],
             'data.attributes.city' => ['required', 'string', 'max:255'],
