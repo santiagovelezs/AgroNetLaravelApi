@@ -21,12 +21,10 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {        
-
+    {
         $eventos = Event::simplePaginate(25);
 
-        return new EventResourceCollection($eventos);
-        
+        return new EventResourceCollection($eventos);        
     }
 
     /**
@@ -48,6 +46,8 @@ class EventController extends Controller
             $event->fecha = $request->input('data.attributes.fecha');
             $event->hora = $request->input('data.attributes.hora');
             $event->duracion = $request->input('data.attributes.duracion');
+            $event->title = $request->input('data.attributes.title');
+            $event->desc = $request->input('data.attributes.desc');
             $event->save();
             return new EventResource($event);           
         }       
@@ -165,6 +165,16 @@ class EventController extends Controller
                                 *geo_locations.longitud/180.0))*6371 < ? ',
                             [$lt, $lt, $lng, $val])                    
                     ->get();                            
+        
+        return new EventResourceCollection($events);
+        
+    }
+
+    public function dateBetween(Request $request, $date1, $date2)
+    {
+        //dd($date1);
+        $events = Event::whereBetween('fecha', [$date1, $date2])
+                    ->get();
         
         return new EventResourceCollection($events);
         

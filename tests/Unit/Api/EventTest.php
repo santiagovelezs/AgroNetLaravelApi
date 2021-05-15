@@ -18,6 +18,8 @@ class EventTest extends TestCase
                 'fecha',
                 'hora',
                 'duracion',
+                'title',
+                'desc',
                 'state',
                 'created_at',
                 'updated_at'
@@ -161,6 +163,19 @@ class EventTest extends TestCase
         $response->assertJsonFragment(['id' => 2]); //Evento Plaza Alfonso Lopez
     }
 
+    public function test_EventsBetweenDate()
+    {
+        $date1 = '2021-09-14';
+        $date2 = '2021-10-20';    
+        $response = $this->get('api/v1/events/date/between/'.$date1.'/'.$date2); 
+        
+        $response->assertStatus(200);       
+
+        $response->assertJsonFragment(['fecha' => '2021-10-20',]); 
+        $response->assertJsonFragment(['fecha' => '2021-09-29',]); 
+       
+    }
+
     private function getStoreRequest($producer_id, $addr_id)
     {
         return [
@@ -171,7 +186,9 @@ class EventTest extends TestCase
                     'addr_id' => $addr_id,
                     'fecha' => '2020/10/19',
                     'hora' => '17:00',
-                    'duracion' => 3
+                    'duracion' => 3,
+                    'title' => 'Test Event',
+                    'desc' => null
                 ]                        
             ]
         ];

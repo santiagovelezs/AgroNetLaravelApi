@@ -15,6 +15,8 @@ class Event extends Model
         'fecha',
         'hora',
         'duracion',
+        'title',
+        'desc',
         'state'
     ];
 

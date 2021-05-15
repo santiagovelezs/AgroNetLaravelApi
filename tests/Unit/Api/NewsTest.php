@@ -78,6 +78,31 @@ class NewsTest extends TestCase
         $response->assertJsonStructure($this::jsonNewsStructure);
     }
 
+    public function test_StoreNewsAsUser()
+    {
+        Sanctum::actingAs(
+            User::find(5)            
+        );
+
+        $user_id = 5;        
+             
+        $response = $this->post('api/v1/news', $this->getStoreRequest($user_id));                     
+
+        $response->assertStatus(401);
+       
+    }
+
+    public function test_getNewsById()
+    {               
+             
+        $response = $this->get('api/v1/news/1');                     
+
+        $response->assertStatus(200); 
+
+        $response->assertJsonStructure($this::jsonNewsStructure);
+       
+    }
+
     private function getStoreRequest($user_id)
     {
         return [
