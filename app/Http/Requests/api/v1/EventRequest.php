@@ -32,7 +32,9 @@ class EventRequest extends FormRequest
             'data.attributes.addr_id' => ['required', 'numeric', 'exists:addrs,id'],
             'data.attributes.fecha' => ['required', 'string', 'max:255'],
             'data.attributes.hora' => ['required', 'string', 'max:255'],
-            'data.attributes.duracion' => ['required', 'numeric']
+            'data.attributes.duracion' => ['required', 'numeric'],
+            'data.attributes.title' => ['required', 'string'],
+            'data.attributes.desc' => ['nullable', 'string']
         ];
     }
 }

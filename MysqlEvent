@@ -1,0 +1,6 @@
+CREATE EVENT IF NOT EXISTS finalize_events
+ON SCHEDULE EVERY DAY
+DO
+	UPDATE events SET state = 'terminado'
+	 WHERE state != 'cancelado' 
+	 AND NOW() > fecha;

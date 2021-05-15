@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Role;
 
+//events?between=2021-09-14&and=2021-10-20
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,6 +42,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     Route::get('geo/{lt}/{lng}/{val}', [App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class, 'circundantes']);
 
     Route::get('events/{lt}/{lng}/{val}', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'circundantes']);
+
+    Route::get('events/date/between/{date1}/{date2}', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'dateBetween']);
 
     Route::get('news', [App\Http\Controllers\Api\V1\News\NewsController::class, 'index']);
 
