@@ -66,7 +66,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class)->except('store');
         Route::apiResource('events', App\Http\Controllers\Api\V1\EventsAgro\EventController::class)->except(['index']);
         Route::apiResource('news', App\Http\Controllers\Api\V1\News\NewsController::class)->except(['index', 'show']); 
-        Route::apiResource('shops', App\Http\Controllers\Api\V1\Shop\ProducerShopController::class)->only(['store', 'update']); 
+        Route::apiResource('shops', App\Http\Controllers\Api\V1\Shop\ProducerShopController::class)->except(['index']); 
     });
 
     Route::middleware(['auth:sanctum', 'role:'.Role::ADMIN])->group(function () {

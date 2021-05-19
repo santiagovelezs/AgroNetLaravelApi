@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             AddrSeeder::class,
             GeoSeeder::class,
             EventSeeder::class,
-            NewsSeeder::class
+            NewsSeeder::class,
+            ShopSeeder::class
         ]);
     }
 }

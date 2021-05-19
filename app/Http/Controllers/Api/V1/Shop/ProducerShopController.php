@@ -36,6 +36,38 @@ class ProducerShopController extends Controller
         
     }
 
+    public function show(Request $request, $id)
+    {
+        if($request->user()->admin)
+        {
+            $shop = Shop::find($id);            
+
+            if($shop)
+            {
+                return new ShopResource($shop);
+            }
+
+            return response()->json(['errors' => [
+                'status' => 404,
+                'title'  => 'Not Found'
+                ]
+            ], 404);            
+            
+        }
+        if($request->user()->producer->shop)
+        {
+            if($request->user()->producer->shop->id == $id)
+            {
+                if($request->user()->producer->shop)
+                    return new ShopResource($request->user()->producer->shop);            
+            }
+        }        
+        
+        return response()->json([
+                'message' => 'Unauthorized'
+                ], 401);
+    }
+
     public function calcPrice(Request $request)
     {
         $producer_id = $request->producer;

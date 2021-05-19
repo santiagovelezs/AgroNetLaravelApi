@@ -40,4 +40,9 @@ class Producer extends User
         return $this->hasMany(News::class, 'producer_id');
     }
 
+    public function shop()
+    {
+        return $this->hasOne(Shop::class);
+    }
+
 }
