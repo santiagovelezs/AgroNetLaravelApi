@@ -49,5 +49,10 @@ class GeoSeeder extends Seeder
             'longitud'=>-75.476811261513,
             'addr_id'=>7            
         ]);
+        DB::table('geo_locations')->insert([
+            'latitud'=>5.020456246361064,
+            'longitud'=>-75.63350007693123,
+            'addr_id'=>11            
+        ]);
     }
 }

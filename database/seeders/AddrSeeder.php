@@ -130,5 +130,17 @@ class AddrSeeder extends Seeder
             'location'=>'Alcaldia Villamaria',
             'etiqueta'=>'Alcaldia Villamaria'
         ]);
+
+        // ID 11
+        // shop producer 2        
+        DB::table('addrs')->insert([
+            'user_id'=>2,
+            'country'=>'Colombia',
+            'province'=>'caldas',
+            'city'=>'Palestina',
+            'street'=>'',
+            'location'=>'Km 8',
+            'etiqueta'=>'Sede'
+        ]);
     }
 }
