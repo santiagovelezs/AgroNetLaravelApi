@@ -26,8 +26,7 @@ class ProducerRequest extends FormRequest
         return [
             'data' => ['required', 'array'],
             'data.type' => ['required'],
-            'data.attributes' => ['required', 'array'],
-            'data.attributes.sede_ppal' => ['nullable', 'string', 'max:255'],
+            'data.attributes' => ['required', 'array'],            
             'data.attributes.id' => ['required', 'numeric', 'unique:producers,id', 'exists:users,id']
         ];
     }
