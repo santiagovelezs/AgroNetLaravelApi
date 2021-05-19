@@ -29,8 +29,7 @@ class ProducerController extends Controller
             //$producer = Producer::create($request->input('data.attributes'));
             //dd($producer);
             $producer = new Producer();
-            $producer->id = $request->input('data.attributes.id');
-            $producer->sede_ppal = $request->input('data.attributes.sede_ppal');
+            $producer->id = $request->input('data.attributes.id');            
             $producer->save();                   
             return new ProducerResource($producer);
             //return new ProducerResource(Producer::find($request->input('data.attributes.id')));

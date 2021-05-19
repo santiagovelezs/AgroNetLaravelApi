@@ -12,8 +12,7 @@ class ProducerTest extends TestCase
         'data' => [ 
             'type',
             'id',
-            'attributes' => [
-                'sede_ppal',
+            'attributes' => [                
                 'id'
             ],
             'relationships',
@@ -107,8 +106,7 @@ class ProducerTest extends TestCase
         return [
             "data" => [
                 "type" => "Producer",
-                "attributes" => [                            
-                    "sede_papal" => null,
+                "attributes" => [    
                     "id" => $user_id
                 ]                        
             ]

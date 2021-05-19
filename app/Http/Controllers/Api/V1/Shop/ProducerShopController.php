@@ -68,10 +68,15 @@ class ProducerShopController extends Controller
                 ], 401);
     }
 
-    public function calcPrice(Request $request)
+    public function calcDeliveryPrice(Request $request)
     {
+        // Query Params
         $producer_id = $request->producer;
-        $addrto = $request->addrto;                           
+        $addrto = $request->addrto;
+        
+        $producer = Producer::findOrFail($producer_id);
+
+        $shop = $producer->shop;
         
         return response()->json([
             'type' => 'DeliveryPrice',
@@ -87,7 +92,8 @@ class ProducerShopController extends Controller
     }
 
     //punto venta controller
-    public function setCostPerKm()
+    //setCostPerKm
+    public function update()
     {
 
     }
