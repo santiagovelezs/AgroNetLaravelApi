@@ -159,8 +159,7 @@ class UserTest extends TestCase
                     "nombre" => "User",
                     "apellido" => "test",
                     "email" => $email,
-                    "password"=> Hash::make('hola123'),
-                    "nameToken" => "web",
+                    "password"=> Hash::make('hola123'),                    
                     "departamento" => "Caldas",
                     "ciudad" => "Herveo",
                     "telefono" => "3012345678"
