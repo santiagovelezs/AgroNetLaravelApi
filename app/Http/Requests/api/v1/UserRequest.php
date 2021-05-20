@@ -34,9 +34,7 @@ class UserRequest extends FormRequest
             'data.attributes.password' => ['required', 'string', 'min:8'],
             'data.attributes.departamento' => ['required', 'string', 'max:255'],
             'data.attributes.ciudad' => ['required', 'string', 'max:255'],
-            'data.attributes.telefono' => ['required', 'string', 'max:255'],
-            'data.attributes.nameToken' => ['required']
-
+            'data.attributes.telefono' => ['required', 'string', 'max:255']
         ];
     }
 }
