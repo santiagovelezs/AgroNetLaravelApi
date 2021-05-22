@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Role;
 
-/* events?between=2021-09-14&and=2021-10-20 */ // // //
+/* events?between=2021-09-14&and=2021-10-20 */ // // // //
 
 /*
 |--------------------------------------------------------------------------
