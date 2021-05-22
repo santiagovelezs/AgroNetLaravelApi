@@ -12,7 +12,7 @@ use App\Http\Resources\Api\V1\UserResourceCollection;
 use App\Http\Resources\Api\V1\AddrResourceCollection;
 use App\Models\Addr;
 
-class RegisteredUserController extends Controller
+class UserController extends Controller
 {    
     public function index(Request $request)
     {

@@ -25,7 +25,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     
     Route::post('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'login']);
    
-    Route::post('users', [App\Http\Controllers\Api\V1\Users\RegisteredUserController::class, 'store']);
+    Route::post('users', [App\Http\Controllers\Api\V1\Users\UserController::class, 'store']);
 
     Route::get('events', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'index'])
                 ->name('events'); 
@@ -52,8 +52,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
         Route::delete('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);
         Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class)->only('store');
-        Route::apiResource('users', App\Http\Controllers\Api\V1\Users\RegisteredUserController::class)->except(['store','index']);
-        Route::get('users/{id}/addrs', [App\Http\Controllers\Api\V1\Users\RegisteredUserController::class, 'addrs'])
+        Route::apiResource('users', App\Http\Controllers\Api\V1\Users\UserController::class)->except(['store','index']);
+        Route::get('users/{id}/addrs', [App\Http\Controllers\Api\V1\Users\UserController::class, 'addrs'])
                     ->name('user.addrs');
         Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class)->only(['store', 'show', 'update', 'destroy']);
         Route::get('addrs/{id}/geo-location', [App\Http\Controllers\Api\V1\Addrs\AddrController::class, 'geoLocation']);    
@@ -71,7 +71,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::middleware(['auth:sanctum', 'role:'.Role::ADMIN])->group(function () {
         Route::group(['prefix'=>'admin','as'=>'api.v1.'], function(){
-            Route::apiResource('users', App\Http\Controllers\Api\V1\Users\RegisteredUserController::class);
+            Route::apiResource('users', App\Http\Controllers\Api\V1\Users\UserController::class);
             Route::apiResource('producers', App\Http\Controllers\Api\V1\Producers\ProducerController::class);
             Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class);
             Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class);
@@ -80,32 +80,3 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         });
     });
 });
-
-
-
-
-//ok Route::post('users/register', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'register']);
-
-//ok Route::post('users/login', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'login']);
-
-
-
-// Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
-
-//     /*Refactor pte */
-// ok    Route::post('users/logout', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);
-// ok    Route::get('users/profile', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'getProfile'])
-//                 ->name('user.profile');
-// ok    Route::post('users/producer', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'producerRegister']);
-//     /* */
-
-// ok    Route::apiResource('addrs', App\Http\Controllers\Api\V1\Geo\AddrController::class);
-//     Route::apiResource('geolocation', App\Http\Controllers\Api\V1\Geo\GeographicLocationController::class);
-// });
-
-// Route::middleware(['auth:sanctum', 'role:'.Role::PRODUCER])->group(function () {
-//     Route::get('producers/profile', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'getProducerProfile'])
-//                 ->name('producer.profile');
-//     Route::apiResource('producers', App\Http\Controllers\Api\V1\Users\Producer\ProducerController::class);
-//     Route::apiResource('events', App\Http\Controllers\Api\V1\Geo\EventController::class);
-// });
