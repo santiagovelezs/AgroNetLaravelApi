@@ -21,7 +21,7 @@ class ShopResource extends JsonResource
                 'producer_id' => $this->producer_id,
                 'whatsapp' => $this->whatsapp,
                 'phone' => $this->phone,
-                'email' => $this->email,
+                'email' => $this->email,                
                 'price_per_km' => $this->price_per_km,
                 'max_shipping_distance' => $this->max_shipping_distance,                
                 'created_at' => $this->created_at,

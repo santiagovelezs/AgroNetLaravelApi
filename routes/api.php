@@ -58,7 +58,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class)->only(['store', 'show', 'update', 'destroy']);
         Route::get('addrs/{id}/geo-location', [App\Http\Controllers\Api\V1\Addrs\AddrController::class, 'geoLocation']);    
         Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class)->only(['store', 'show']);    
-        Route::get('shop/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
+        Route::get('shops/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
         
     });
 

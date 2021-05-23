@@ -18,10 +18,10 @@ class ShopSeeder extends Seeder
             'producer_id'=>2,
             'whatsapp'=>'312345678',
             'phone'=>'8887777',
-            'email'=>'platanera@mail.es',
+            'email'=>'platanera@mail.es',            
             'addr_id'=>11,
             'price_per_km'=>850,
-            'max_shipping_distance'=>10
+            'max_shipping_distance'=>15
         ]);        
     }
 }
