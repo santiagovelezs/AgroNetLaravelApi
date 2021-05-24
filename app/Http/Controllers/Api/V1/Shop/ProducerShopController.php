@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Api\V1\ShopResource;
 use App\Http\Resources\Api\V1\ShopResourceCollection;
 use App\Models\Shop;
+use App\Models\Producer;
+use App\Models\Addr;
 
 class ProducerShopController extends Controller
 {
@@ -51,6 +53,7 @@ class ProducerShopController extends Controller
         ], 404);                
         
     }
+    
 
     public function calcDeliveryPrice(Request $request)
     {
@@ -61,18 +64,47 @@ class ProducerShopController extends Controller
         $producer = Producer::findOrFail($producer_id);
 
         $shop = $producer->shop;
+
+        $addr = Addr::findOrFail($addrto);
+
+        $geoto = $addr->geoLocation;
+
+        $geofrom = $shop->addr->geoLocation;
+
+        $max_dis = $shop->max_shipping_distance;
+
+        
+
+        /*$distance = DB::whereRaw('acos(sin(PI()*?/180)*sin(PI()*?/180.0)
+                                +cos(PI()*?/180.0)
+                                *cos(PI()*?/180.0)
+                                *cos(PI()*?/180.0-PI()
+                                *?/180.0))*6371',
+                            [$geofrom->latitud, $geoto->latitud, $geofrom->latitud, $geoto->latitud, $geoto->longitud, $geofrom->longitud])                    
+                    ->get();*/
+        
+        $distance = $this->calcDistance($geofrom->latitud,$geoto->latitud,$geofrom->longitud,$geoto->longitud);
+
+        $inZone = $max_dis>=$distance ? True:False;
         
         return response()->json([
             'type' => 'DeliveryPrice',
             'attributes' => [
                 'producer' => $producer_id,
                 'addrTo' => $addrto,
-                'distance' => 8,
-                'per_km' => 900,
-                'cost' => 7200
+                'distance' => $distance,
+                'per_km' => $shop->price_per_km,
+                'cost' => round($shop->price_per_km*$distance),
+                'inZone' => $inZone
+
             ]
         ]);
         
+    }
+
+    private function calcDistance($lt1, $lt2, $ln1, $ln2)
+    {
+        return acos(sin(pi()*$lt1/180)*sin(pi()*$lt2/180)+cos(pi()*$lt1/180)*cos(pi()*$lt2/180)*cos(pi()*$ln2/180-pi()*$ln1/180))*6371;
     }
 
     //punto venta controller

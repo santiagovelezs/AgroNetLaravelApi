@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ShopTest extends TestCase
 { 
-    const jsonAddrStructure = [
+    const jsonShopStructure = [
         'data' => [ 
             'type',
             'id',
@@ -48,132 +48,86 @@ class ShopTest extends TestCase
     {
         Sanctum::actingAs(
             User::find(1)            
-        );           
+        );  
         
-        $response = $this->post('api/v1/shops', $this->getStoreRequest());                     
+        $producer_id = 3;
+        
+        $response = $this->post('api/v1/shops', $this->getStoreRequest($producer_id));                     
 
         $response->assertStatus(201);
 
-        $response->assertJsonStructure($this::jsonAddrStructure);
+        $response->assertJsonStructure($this::jsonShopStructure);
         
     }
 
-    /*public function test_StoreAddrAsProducer()
+    public function test_StoreShopAsProducer()
     {
+        $producer_id = 3;
+
         Sanctum::actingAs(
-            User::find(2)            
-        );           
+            User::find($producer_id)            
+        );          
         
-        $response = $this->post('api/v1/addrs', $this->getStoreRequest(2));
+        
+        $response = $this->post('api/v1/shops', $this->getStoreRequest($producer_id));
 
         $response->assertStatus(201);
 
-        $response->assertJsonStructure($this::jsonAddrStructure);
+        $response->assertJsonStructure($this::jsonShopStructure);
         
-    }*/
+    }
 
-    /*public function test_StoreAddrNotBelongsAsProducer()
+    public function test_StoreShopNotBelongsAsProducer()
     {
+        $producer_id = 3;
+        $otherProducer_id = 12;
+
         Sanctum::actingAs(
-            User::find(2)            
+            User::find($producer_id)            
         );           
         
-        $response = $this->post('api/v1/addrs', $this->getStoreRequest(3));                     
+        $response = $this->post('api/v1/shops', $this->getStoreRequest($otherProducer_id));                     
 
         $response->assertStatus(401);        
         
-    }*/
+    }   
 
-    /*public function test_StoreAddrAsUser()
-    {
-        Sanctum::actingAs(
-            User::find(4)            
-        );           
+    public function test_getShop()
+    {                  
         
-        $response = $this->post('api/v1/addrs', $this->getStoreRequest(4));                     
-
-        $response->assertStatus(201);
-
-        $response->assertJsonStructure($this::jsonAddrStructure);
-        
-    }*/
-
-    /*public function test_StoreAddrNotBelongsAsUser()
-    {
-        Sanctum::actingAs(
-            User::find(4)            
-        );           
-        
-        $response = $this->post('api/v1/addrs', $this->getStoreRequest(5));                     
-
-        $response->assertStatus(401);        
-        
-    }*/
-
-    /*public function test_getAddrAsAdmin()
-    {
-        Sanctum::actingAs(
-            User::find(1)            
-        );           
-        
-        $response = $this->get('api/v1/addrs/1');                     
+        $response = $this->get('api/v1/shops/1');                     
 
         $response->assertStatus(200); 
 
-        $response->assertJsonStructure($this::jsonAddrStructure);
-    }*/
-
-    /*public function test_getAddrNotBelongsAsProducer()
+        $response->assertJsonStructure($this::jsonShopStructure);
+    }   
+    
+    public function test_inZone()
     {
         Sanctum::actingAs(
-            User::find(2)            
-        );           
-        
-        $response = $this->get('api/v1/addrs/5');                     
+            User::find(5)            
+        ); 
 
-        $response->assertStatus(404); 
-    }*/
+        $addr_chinchina = 8;
+        $producer_id_shop_palestina = 2;
 
-    /*public function test_getGeoByAddrAsAdmin()
-    {
-        Sanctum::actingAs(
-            User::find(1)            
-        );           
-        
-        $response = $this->get('api/v1/addrs/5/geo-location');                     
+        $response = $this->get('api/v1/shops/1/shipping-price?producer='.$producer_id_shop_palestina.'&addrto='.$addr_chinchina);  
 
-        $response->assertJsonStructure($this::jsonStructure); 
-    }*/
+        $response->assertStatus(200); 
 
-    /*public function test_getGeoByAddrNotBelongsAsProducer()
-    {
-        Sanctum::actingAs(
-            User::find(2)            
-        );           
-        
-        $response = $this->get('api/v1/addrs/5/geo-location');                     
+        $response->assertJsonFragment([
+            'inZone' => true
+        ]);
 
-        $response->assertStatus(404);  
-    }*/
+    }
 
-    /*public function test_getGeoByAddrAsProducer()
-    {
-        Sanctum::actingAs(
-            User::find(2)            
-        );           
-        
-        $response = $this->get('api/v1/addrs/3/geo-location');                     
-
-        $response->assertJsonStructure($this::jsonStructure); 
-    }*/
-
-    private function getStoreRequest()
+    private function getStoreRequest($producer_id)
     {
         return [
             "data" => [
                 "type" => "Shop",
                 "attributes" => [                            
-                    "producer_id" => 3,
+                    "producer_id" => $producer_id,
                     "whatsapp" => "9878985",
                     "phone" => "5874141",
                     "email"=> "lamaria@mail.es",

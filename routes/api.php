@@ -49,7 +49,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('news/{id}', [App\Http\Controllers\Api\V1\News\NewsController::class, 'show']);
 
-    Route::get('shops/{id}', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'show']);
+    Route::get('shops/{id}', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'show']);    
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
         Route::delete('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);
@@ -60,7 +60,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class)->only(['store', 'show', 'update', 'destroy']);
         Route::get('addrs/{id}/geo-location', [App\Http\Controllers\Api\V1\Addrs\AddrController::class, 'geoLocation']);    
         Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class)->only(['store', 'show']);    
-        Route::get('shops/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
+        Route::get('shops/{id}/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
         
     });
 

@@ -45,7 +45,7 @@ class GeoLocationTest extends TestCase
             User::find(1)            
         );           
         
-        $response = $this->post('api/v1/geo-locations', $this->getStoreRequest(8));                     
+        $response = $this->post('api/v1/geo-locations', $this->getStoreRequest(10));                     
 
         $response->assertStatus(201);
 
@@ -58,7 +58,7 @@ class GeoLocationTest extends TestCase
             User::find(5)            
         );           
         
-        $response = $this->post('api/v1/geo-locations', $this->getStoreRequest(8));                     
+        $response = $this->post('api/v1/geo-locations', $this->getStoreRequest(10));                     
 
         $response->assertStatus(201);
 
