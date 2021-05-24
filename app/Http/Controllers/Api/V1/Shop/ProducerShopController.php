@@ -25,8 +25,7 @@ class ProducerShopController extends Controller
 
         if($user->admin or $user->id == $request->input('data.attributes.producer_id'))
         {
-            $shop = Shop::create($request->input('data.attributes'));
-            //dd($shop);                              
+            $shop = Shop::create($request->input('data.attributes'));                                      
             return new ShopResource($shop);            
         }       
 
@@ -38,34 +37,19 @@ class ProducerShopController extends Controller
 
     public function show(Request $request, $id)
     {
-        if($request->user()->admin)
+        $shop = Shop::find($id);        
+
+        if($shop)
         {
-            $shop = Shop::find($id);            
-
-            if($shop)
-            {
-                return new ShopResource($shop);
-            }
-
-            return response()->json(['errors' => [
-                'status' => 404,
-                'title'  => 'Not Found'
-                ]
-            ], 404);            
-            
+            return new ShopResource($shop);
         }
-        if($request->user()->producer->shop)
-        {
-            if($request->user()->producer->shop->id == $id)
-            {
-                if($request->user()->producer->shop)
-                    return new ShopResource($request->user()->producer->shop);            
-            }
-        }        
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);                
         
-        return response()->json([
-                'message' => 'Unauthorized'
-                ], 401);
     }
 
     public function calcDeliveryPrice(Request $request)
