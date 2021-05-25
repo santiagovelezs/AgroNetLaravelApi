@@ -47,5 +47,25 @@ class ProductSeeder extends Seeder
             "price"=>$faker->randomDigitNotNull()
 
         ]);
+        DB::table('products')->insert([
+            'producer_id'=>3,
+            'category_id'=>1,
+            "image_path"=>$faker->imageUrl($width = 640, $height = 480),
+            "name"=>$faker->word(),
+            "description"=>$faker->text($maxNbChars = 100),
+            "measurement"=>1,
+            "price"=>$faker->randomDigitNotNull()
+
+        ]);
+        DB::table('products')->insert([
+            'producer_id'=>3,
+            'category_id'=>1,
+            "image_path"=>$faker->imageUrl($width = 640, $height = 480),
+            "name"=>$faker->word(),
+            "description"=>$faker->text($maxNbChars = 100),
+            "measurement"=>1,
+            "price"=>$faker->randomDigitNotNull()
+
+        ]);
     }
 }

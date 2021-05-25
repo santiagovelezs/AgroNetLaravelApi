@@ -33,7 +33,10 @@ class Producer extends User
     {
         return $this->hasMany(Event::class);
     }
-
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
     public function news()
     {
         return $this->hasMany(News::class, 'producer_id');

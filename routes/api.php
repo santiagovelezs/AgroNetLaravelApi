@@ -36,6 +36,9 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('products/{id}', [App\Http\Controllers\Api\V1\Products\ProductController::class,'show']);
 
+    Route::get('producer/{id}/products', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'products'])
+                    ->name('producer.products');
+
     Route::get('events/{id}/addr', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'addr']); 
 
     Route::get('events/{id}/geo-location', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'geoLocation']);
@@ -53,8 +56,10 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('news/{id}', [App\Http\Controllers\Api\V1\News\NewsController::class, 'show']);
 
+    Route::get('categorys', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'index']);
 
-    Route::get('shops/{id}', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'show']);   
+    Route::get('categorys/{id}', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'show']);
+
     
     Route::get('producer/{id}', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'producerInfo']);
 
@@ -91,6 +96,9 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
             Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class);
             Route::apiResource('news', App\Http\Controllers\Api\V1\News\NewsController::class);
             Route::apiResource('shops', App\Http\Controllers\Api\V1\Shop\ProducerShopController::class); 
+            Route::apiResource('products', App\Http\Controllers\Api\V1\Products\ProductController::class)->except('index','show');
+            Route::apiResource('categorys', App\Http\Controllers\Api\V1\Categorys\CategoryController::class)->except('index','show');
+            
 
         });
     });

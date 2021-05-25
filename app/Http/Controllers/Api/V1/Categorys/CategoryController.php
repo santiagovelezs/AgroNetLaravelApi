@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Api\V1\Categorys;
-
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\api\v1\CategoryRequest;
+use App\Http\Resources\Api\V1\CategoryResource;
+use App\Http\Resources\Api\V1\CategoryResourceCollection;
+
 
 class CategoryController extends Controller
 {
@@ -14,17 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $categorys = Category::simplePaginate(25);
+        return new CategoryResourceCollection($categorys);
     }
 
     /**
@@ -33,9 +28,30 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $user = $request->user();        
+        
+        if($user->admin)
+        {
+
+            $category = Category::create($request->input('data.attributes'));
+            return new CategoryResource($category);
+        } 
+        
+            else
+            {
+                return response()->json([
+                    'message' => 'Unauthorized',
+                    'details' => 'invalid ',
+                    ], 401); 
+            }
+           
+             
+
+        return response()->json([
+            'message' => 'Unauthorized'
+            ], 401);
     }
 
     /**
@@ -44,21 +60,23 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $category = Category::find($id);
+        if($category)
+        {
+
+            return new CategoryResource($category);                
+        }  
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);   
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
+  
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +85,37 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $user = $request->user(); 
+     
+        if($user->admin)
+        {
+           
+            $category = Category::find($id);
+        }
+        else
+        {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'details' => 'invalid ',
+                ], 401); 
+        }
+      
+        if(isset($category))
+        {
+            
+            $category->update($request->input('data.attributes'));
+           
+            return new CategoryResource($category);
+        }
+       
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);
     }
 
     /**
@@ -78,8 +124,23 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request,$id)
     {
-        //
+        if($request->user()->admin)
+        {
+            $category = Category::find($id);
+        }
+             
+        if($category)
+        {
+            $category->delete();
+            return response(null, 204);
+        }
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);
     }
 }
