@@ -22,5 +22,9 @@ class ProducerSeed extends Seeder
         DB::table('producers')->insert([
             'id'=>3,
         ]);
+
+        DB::table('producers')->insert([
+            'id'=>12,
+        ]);
     }
 }

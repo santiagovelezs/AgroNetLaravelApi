@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Api\V1\ShopResource;
 use App\Http\Resources\Api\V1\ShopResourceCollection;
 use App\Models\Shop;
+use App\Models\Producer;
+use App\Models\Addr;
 
 class ProducerShopController extends Controller
 {
@@ -25,8 +27,7 @@ class ProducerShopController extends Controller
 
         if($user->admin or $user->id == $request->input('data.attributes.producer_id'))
         {
-            $shop = Shop::create($request->input('data.attributes'));
-            //dd($shop);                              
+            $shop = Shop::create($request->input('data.attributes'));                                      
             return new ShopResource($shop);            
         }       
 
@@ -38,57 +39,70 @@ class ProducerShopController extends Controller
 
     public function show(Request $request, $id)
     {
-        if($request->user()->admin)
+        $shop = Shop::find($id);        
+
+        if($shop)
         {
-            $shop = Shop::find($id);            
-
-            if($shop)
-            {
-                return new ShopResource($shop);
-            }
-
-            return response()->json(['errors' => [
-                'status' => 404,
-                'title'  => 'Not Found'
-                ]
-            ], 404);            
-            
+            return new ShopResource($shop);
         }
-        if($request->user()->producer->shop)
-        {
-            if($request->user()->producer->shop->id == $id)
-            {
-                if($request->user()->producer->shop)
-                    return new ShopResource($request->user()->producer->shop);            
-            }
-        }        
-        
-        return response()->json([
-                'message' => 'Unauthorized'
-                ], 401);
-    }
 
-    public function calcDeliveryPrice(Request $request)
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);                
+        
+    }
+    
+
+    public function calcDeliveryPrice(Request $request, $id)
     {
         // Query Params
-        $producer_id = $request->producer;
+        //$producer_id = $request->producer;
         $addrto = $request->addrto;
         
-        $producer = Producer::findOrFail($producer_id);
+        $shop = Shop::findOrFail($id);        
 
-        $shop = $producer->shop;
+        $addr = Addr::findOrFail($addrto);
+
+        $geoto = $addr->geoLocation;
+
+        $geofrom = $shop->addr->geoLocation;
+
+        $max_dis = $shop->max_shipping_distance;
+
+        
+
+        /*$distance = DB::whereRaw('acos(sin(PI()*?/180)*sin(PI()*?/180.0)
+                                +cos(PI()*?/180.0)
+                                *cos(PI()*?/180.0)
+                                *cos(PI()*?/180.0-PI()
+                                *?/180.0))*6371',
+                            [$geofrom->latitud, $geoto->latitud, $geofrom->latitud, $geoto->latitud, $geoto->longitud, $geofrom->longitud])                    
+                    ->get();*/
+        
+        $distance = $this->calcDistance($geofrom->latitud,$geoto->latitud,$geofrom->longitud,$geoto->longitud);
+
+        $inZone = $max_dis>=$distance ? True:False;
         
         return response()->json([
             'type' => 'DeliveryPrice',
             'attributes' => [
-                'producer' => $producer_id,
+                'producer' => $shop->owner->id,
                 'addrTo' => $addrto,
-                'distance' => 8,
-                'per_km' => 900,
-                'cost' => 7200
+                'distance' => $distance,
+                'per_km' => $shop->price_per_km,
+                'cost' => round($shop->price_per_km*$distance),
+                'inZone' => $inZone
+
             ]
         ]);
         
+    }
+
+    private function calcDistance($lt1, $lt2, $ln1, $ln2)
+    {
+        return acos(sin(pi()*$lt1/180)*sin(pi()*$lt2/180)+cos(pi()*$lt1/180)*cos(pi()*$lt2/180)*cos(pi()*$ln2/180-pi()*$ln1/180))*6371;
     }
 
     //punto venta controller
