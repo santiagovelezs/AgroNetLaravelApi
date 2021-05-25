@@ -60,6 +60,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('categorys/{id}', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'show']);
 
+    Route::get('categorys/{id}/products', [App\Http\Controllers\Api\V1\Categorys\CategorysController::class, 'products'])
+                    ->name('categorys.products');
     
     Route::get('producer/{id}', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'producerInfo']);
 

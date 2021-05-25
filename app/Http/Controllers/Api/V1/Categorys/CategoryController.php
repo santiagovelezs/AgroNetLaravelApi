@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\api\v1\CategoryRequest;
 use App\Http\Resources\Api\V1\CategoryResource;
 use App\Http\Resources\Api\V1\CategoryResourceCollection;
-
+use App\Http\Resources\Api\V1\ProductResourceCollection;
 
 class CategoryController extends Controller
 {
@@ -142,5 +142,24 @@ class CategoryController extends Controller
             'title'  => 'Not Found'
             ]
         ], 404);
+    }
+
+    public function products($id)
+    {
+        $category = Category::find($id);     
+        
+        if($category)
+        {
+            $category = $category->products;
+
+            return new CategoryResourceCollection($category);                
+        }            
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);       
+        
     }
 }
