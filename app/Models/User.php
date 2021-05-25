@@ -75,4 +75,9 @@ class User extends UserRole
     {
         $this->attributes['password'] = Hash::make($password);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'producer_id');
+    }
 }

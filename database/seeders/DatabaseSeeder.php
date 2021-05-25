@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             GeoSeeder::class,
             EventSeeder::class,
             NewsSeeder::class,
-            ShopSeeder::class
+            ShopSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class
         ]);
     }
 }
