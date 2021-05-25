@@ -53,6 +53,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('news/{id}', [App\Http\Controllers\Api\V1\News\NewsController::class, 'show']);
 
+    Route::get('categorys', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'index']);
+
     
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
@@ -86,6 +88,9 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
             Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class);
             Route::apiResource('news', App\Http\Controllers\Api\V1\News\NewsController::class);
             Route::apiResource('shops', App\Http\Controllers\Api\V1\Shop\ProducerShopController::class); 
+            Route::apiResource('products', App\Http\Controllers\Api\V1\Products\ProductController::class)->except('index','show');
+            Route::apiResource('categorys', App\Http\Controllers\Api\V1\Categorys\CategoryController::class)->except('index','show');
+            
 
         });
     });

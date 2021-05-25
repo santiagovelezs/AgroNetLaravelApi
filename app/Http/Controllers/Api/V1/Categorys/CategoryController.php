@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1\Categorys;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\api\v1\CategoryRequest;
+use App\Http\Resources\Api\V1\CategoryResource;
+use App\Http\Resources\Api\V1\CategoryResourceCollection;
+
 
 class CategoryController extends Controller
 {
@@ -14,17 +19,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $categorys = Category::simplePaginate(25);
+        return new CategoryResourceCollection($categorys);
     }
 
     /**
@@ -33,9 +29,30 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $user = $request->user();        
+        
+        if($user->admin)
+        {
+
+            $category = Category::create($request->input('data.attributes'));
+            return new CategoryResource($category);
+        } 
+        
+            else
+            {
+                return response()->json([
+                    'message' => 'Unauthorized',
+                    'details' => 'invalid ',
+                    ], 401); 
+            }
+           
+             
+
+        return response()->json([
+            'message' => 'Unauthorized'
+            ], 401);
     }
 
     /**
