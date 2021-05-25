@@ -55,6 +55,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('categorys', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'index']);
 
+    Route::get('categorys/{id}', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'show']);
+
     
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {

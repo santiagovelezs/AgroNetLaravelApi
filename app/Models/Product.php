@@ -28,4 +28,9 @@ class Product extends Model
     {
         return $this->belongsTo(Producer::class, 'producer_id');
     }
+
+    public function categorys()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }
