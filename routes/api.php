@@ -58,6 +58,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     
     Route::get('producer/{id}', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'producerInfo']);
 
+    Route::get('shops/{id}/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
+
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
         Route::delete('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);
@@ -68,7 +70,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class)->only(['store', 'show', 'update', 'destroy']);
         Route::get('addrs/{id}/geo-location', [App\Http\Controllers\Api\V1\Addrs\AddrController::class, 'geoLocation']);    
         Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class)->only(['store', 'show']);    
-        Route::get('shops/{id}/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
+       
         
     });
 
@@ -77,8 +79,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::apiResource('events', App\Http\Controllers\Api\V1\EventsAgro\EventController::class)->except(['index']);
         Route::apiResource('news', App\Http\Controllers\Api\V1\News\NewsController::class)->except(['index', 'show']); 
         Route::apiResource('shops', App\Http\Controllers\Api\V1\Shop\ProducerShopController::class)->except(['index']); 
-        Route::apiResource('products', App\Http\Controllers\Api\V1\Products\ProductController::class)->except('index','show');
-        
+        Route::apiResource('products', App\Http\Controllers\Api\V1\Products\ProductController::class)->except('index','show');       
           
     });
 

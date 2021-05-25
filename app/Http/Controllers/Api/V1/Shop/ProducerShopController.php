@@ -55,15 +55,13 @@ class ProducerShopController extends Controller
     }
     
 
-    public function calcDeliveryPrice(Request $request)
+    public function calcDeliveryPrice(Request $request, $id)
     {
         // Query Params
-        $producer_id = $request->producer;
+        //$producer_id = $request->producer;
         $addrto = $request->addrto;
         
-        $producer = Producer::findOrFail($producer_id);
-
-        $shop = $producer->shop;
+        $shop = Shop::findOrFail($id);        
 
         $addr = Addr::findOrFail($addrto);
 
@@ -90,7 +88,7 @@ class ProducerShopController extends Controller
         return response()->json([
             'type' => 'DeliveryPrice',
             'attributes' => [
-                'producer' => $producer_id,
+                'producer' => $shop->owner->id,
                 'addrTo' => $addrto,
                 'distance' => $distance,
                 'per_km' => $shop->price_per_km,
