@@ -54,7 +54,9 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     Route::get('news/{id}', [App\Http\Controllers\Api\V1\News\NewsController::class, 'show']);
 
 
-    Route::get('shops/{id}', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'show']);    
+    Route::get('shops/{id}', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'show']);   
+    
+    Route::get('producer/{id}', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'producerInfo']);
 
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Http\Requests\api\v1\ProducerRequest;
 use App\Http\Resources\Api\V1\ProducerResource;
 use App\Http\Resources\Api\V1\ProducerResourceCollection;
+use App\Http\Resources\Api\V1\ProducerPublicResource;
 use App\Http\Resources\Api\V1\EventResourceCollection;
 use App\Models\Producer;
 
@@ -69,6 +70,22 @@ class ProducerController extends Controller
         return response()->json([
                 'message' => 'Unauthorized'
                 ], 401);
+    }
+
+    public function producerInfo(Request $request, $id)
+    {
+        $producer = Producer::find($id);        
+
+        if($producer)
+        {
+            return new ProducerPublicResource($producer);
+        }
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);     
     }
     
     public function update(Request $request, $id)
