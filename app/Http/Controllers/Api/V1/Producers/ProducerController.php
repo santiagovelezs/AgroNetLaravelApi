@@ -10,6 +10,7 @@ use App\Http\Resources\Api\V1\ProducerResource;
 use App\Http\Resources\Api\V1\ProducerResourceCollection;
 use App\Http\Resources\Api\V1\ProducerPublicResource;
 use App\Http\Resources\Api\V1\EventResourceCollection;
+use App\Http\Resources\Api\V1\ProductResourceCollection;
 use App\Models\Producer;
 
 class ProducerController extends Controller
@@ -107,6 +108,25 @@ class ProducerController extends Controller
             $events = $producer->events;
 
             return new EventResourceCollection($events);                
+        }            
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);       
+        
+    }
+
+    public function products($id)
+    {
+        $producer = Producer::find($id);     
+        
+        if($producer)
+        {
+            $products = $producer->products;
+
+            return new ProductResourceCollection($products);                
         }            
 
         return response()->json(['errors' => [

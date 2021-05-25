@@ -36,6 +36,9 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('products/{id}', [App\Http\Controllers\Api\V1\Products\ProductController::class,'show']);
 
+    Route::get('producer/{id}/products', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'products'])
+                    ->name('producer.products');
+
     Route::get('events/{id}/addr', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'addr']); 
 
     Route::get('events/{id}/geo-location', [App\Http\Controllers\Api\V1\EventsAgro\EventController::class, 'geoLocation']);
@@ -53,15 +56,10 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('news/{id}', [App\Http\Controllers\Api\V1\News\NewsController::class, 'show']);
 
-<<<<<<< HEAD
     Route::get('categorys', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'index']);
 
     Route::get('categorys/{id}', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'show']);
 
-=======
-
-    Route::get('shops/{id}', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'show']);   
->>>>>>> b8f934f799f11e8967af6dca98eb05e81e717b44
     
     Route::get('producer/{id}', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'producerInfo']);
 
