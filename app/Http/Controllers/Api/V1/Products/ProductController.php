@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\api\v1\ProductRequest;
 use App\Http\Resources\Api\V1\ProductResource;
 use App\Http\Resources\Api\V1\ProductResourceCollection;
+use App\Http\Resources\Api\V1\QuestionResourceCollection;
 
 class ProductController extends Controller
 {
@@ -140,9 +141,23 @@ class ProductController extends Controller
             ]
         ], 404);
     }
-    public function products($id)
-    {        
+    public function questions($id)
+    {
+       
+        $product = Product::find($id);     
         
+        if($product)
+        {
+            $questions = $product->questions;
+
+            return new QuestionResourceCollection($questions);                
+        }            
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);       
         
     }
 }

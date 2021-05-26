@@ -36,6 +36,9 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('products/{id}', [App\Http\Controllers\Api\V1\Products\ProductController::class,'show']);
 
+    Route::get('products/{id}/questions', [App\Http\Controllers\Api\V1\Products\ProductController::class, 'questions'])
+    ->name('products.questions');
+
     Route::get('producer/{id}/products', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'products'])
                     ->name('producer.products');
 
@@ -60,7 +63,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('categorys/{id}', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'show']);
 
-    Route::get('categorys/{id}/products', [App\Http\Controllers\Api\V1\Categorys\CategorysController::class, 'products'])
+    Route::get('categorys/{id}/products', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class, 'products'])
                     ->name('categorys.products');
     
     Route::get('producer/{id}', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'producerInfo']);
@@ -68,6 +71,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     Route::get('shops/{id}/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
     
     Route::get('questions/{id}', [App\Http\Controllers\Api\V1\Questions\QuestionController::class,'show']);
+
+   
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
         Route::delete('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);

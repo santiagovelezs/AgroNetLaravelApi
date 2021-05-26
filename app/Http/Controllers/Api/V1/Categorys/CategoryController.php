@@ -150,9 +150,9 @@ class CategoryController extends Controller
         
         if($category)
         {
-            $category = $category->products;
+            $products = $category->products;
 
-            return new CategoryResourceCollection($category);                
+            return new ProductResourceCollection($products);                
         }            
 
         return response()->json(['errors' => [
