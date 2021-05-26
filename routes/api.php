@@ -72,6 +72,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     
     Route::get('questions/{id}', [App\Http\Controllers\Api\V1\Questions\QuestionController::class,'show']);
 
+    Route::get('answers/{id}', [App\Http\Controllers\Api\V1\Answers\AnswerController::class,'show']);
+
    
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
