@@ -80,4 +80,9 @@ class User extends UserRole
     {
         return $this->hasMany(Product::class, 'producer_id');
     }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class, 'user_id');
+    }
 }

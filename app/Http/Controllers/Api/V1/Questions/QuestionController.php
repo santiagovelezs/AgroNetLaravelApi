@@ -17,18 +17,11 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = Question::simplePaginate(25);
+        return new QuestionResourceCollection($questions);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  
 
     /**
      * Store a newly created resource in storage.
@@ -91,16 +84,6 @@ class QuestionController extends Controller
         ], 404);   
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -109,9 +92,37 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(QuestionRequest $request, $id)
     {
-        //
+        $user = $request->user();
+
+        if($request->user()->admin)
+        {
+            $question = Question::find($id);
+        }
+        else if($user->id == $request->input('data.attributes.user_id'))
+        {
+            
+            $question = $request->user()->questions()->find($id);
+        }
+        else
+        {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'details' => 'invalid ',
+                ], 401); 
+        }        
+        if(isset($question))
+        {
+            $question->update($request->input('data.attributes'));
+            return new QuestionResource($question);
+        }
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);
     }
 
     /**
@@ -120,8 +131,29 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy(Request $request, $id)
     {
-        //
+        if($request->user()->admin)
+        {
+            $question = Question::find($id);
+        }
+        else 
+        {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'details' => 'invalid ',
+                ], 401); 
+        }        
+        if($question)
+        {
+            $question->delete();
+            return response(null, 204);
+        }
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);
     }
 }
