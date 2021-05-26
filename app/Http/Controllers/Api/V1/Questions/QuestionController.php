@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Question;
-
+namespace App\Http\Controllers\Api\V1\Questions;
+use App\Http\Controllers\Controller;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Http\Requests\api\v1\QuestionRequest;
+use App\Http\Resources\Api\V1\QuestionResource;
+use App\Http\Resources\Api\V1\QuestionResourceCollection;
 
 class QuestionController extends Controller
 {
@@ -33,9 +36,37 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
-        //
+        
+        $user = $request->user();        
+        
+        if($user->admin)
+        {
+            $question = Question::create($request->input('data.attributes'));
+            return new QuestionResource($question);
+        } 
+
+        if($user->id == $request->input('data.attributes.user_id'))
+        {
+           
+                $question = Question::create($request->input('data.attributes'));
+                return new QuestionResource($question);
+        }
+            else
+            {
+                return response()->json([
+                    'message' => 'Unauthorized',
+                    'details' => 'invalid ',
+                    ], 401); 
+            }
+           
+             
+
+        return response()->json([
+            'message' => 'Unauthorized'
+            ], 401);
+
     }
 
     /**
@@ -44,9 +75,20 @@ class QuestionController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show($id)
     {
-        //
+        $question = Question::find($id);
+        if($question)
+        {
+
+            return new QuestionResource($question);                
+        }  
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);   
     }
 
     /**

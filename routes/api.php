@@ -66,7 +66,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
     Route::get('producer/{id}', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'producerInfo']);
 
     Route::get('shops/{id}/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
-
+    
+    Route::get('questions/{id}', [App\Http\Controllers\Api\V1\Questions\QuestionController::class,'show']);
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
         Route::delete('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);
@@ -77,7 +78,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class)->only(['store', 'show', 'update', 'destroy']);
         Route::get('addrs/{id}/geo-location', [App\Http\Controllers\Api\V1\Addrs\AddrController::class, 'geoLocation']);    
         Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class)->only(['store', 'show']);    
-       
+        Route::apiResource('questions', App\Http\Controllers\Api\V1\Questions\QuestionController::class)->except('index','show');
         
     });
 
