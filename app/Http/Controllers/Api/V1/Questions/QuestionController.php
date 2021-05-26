@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Categorys;
+namespace App\Http\Controllers\Api\V1\Questions;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Question;
 use Illuminate\Http\Request;
-use App\Http\Requests\api\v1\CategoryRequest;
-use App\Http\Resources\Api\V1\CategoryResource;
-use App\Http\Resources\Api\V1\CategoryResourceCollection;
-use App\Http\Resources\Api\V1\ProductResourceCollection;
+use App\Http\Requests\api\v1\QuestionRequest;
+use App\Http\Resources\Api\V1\QuestionResource;
+use App\Http\Resources\Api\V1\QuestionResourceCollection;
 
-class CategoryController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +17,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categorys = Category::simplePaginate(25);
-        return new CategoryResourceCollection($categorys);
+        $questions = Question::simplePaginate(25);
+        return new QuestionResourceCollection($questions);
     }
+
+  
 
     /**
      * Store a newly created resource in storage.
@@ -28,17 +29,23 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(QuestionRequest $request)
     {
+        
         $user = $request->user();        
         
         if($user->admin)
         {
-
-            $category = Category::create($request->input('data.attributes'));
-            return new CategoryResource($category);
+            $question = Question::create($request->input('data.attributes'));
+            return new QuestionResource($question);
         } 
-        
+
+        if($user->id == $request->input('data.attributes.user_id'))
+        {
+           
+                $question = Question::create($request->input('data.attributes'));
+                return new QuestionResource($question);
+        }
             else
             {
                 return response()->json([
@@ -52,21 +59,22 @@ class CategoryController extends Controller
         return response()->json([
             'message' => 'Unauthorized'
             ], 401);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $category = Category::find($id);
-        if($category)
+        $question = Question::find($id);
+        if($question)
         {
 
-            return new CategoryResource($category);                
+            return new QuestionResource($question);                
         }  
 
         return response()->json(['errors' => [
@@ -76,23 +84,26 @@ class CategoryController extends Controller
         ], 404);   
     }
 
-  
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(QuestionRequest $request, $id)
     {
-        $user = $request->user(); 
-     
-        if($user->admin)
+        $user = $request->user();
+
+        if($request->user()->admin)
         {
-           
-            $category = Category::find($id);
+            $question = Question::find($id);
+        }
+        else if($user->id == $request->input('data.attributes.user_id'))
+        {
+            
+            $question = $request->user()->questions()->find($id);
         }
         else
         {
@@ -100,16 +111,12 @@ class CategoryController extends Controller
                 'message' => 'Unauthorized',
                 'details' => 'invalid ',
                 ], 401); 
-        }
-      
-        if(isset($category))
+        }        
+        if(isset($question))
         {
-            
-            $category->update($request->input('data.attributes'));
-           
-            return new CategoryResource($category);
+            $question->update($request->input('data.attributes'));
+            return new QuestionResource($question);
         }
-       
 
         return response()->json(['errors' => [
             'status' => 404,
@@ -121,19 +128,25 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         if($request->user()->admin)
         {
-            $category = Category::find($id);
+            $question = Question::find($id);
         }
-             
-        if($category)
+        else 
         {
-            $category->delete();
+            return response()->json([
+                'message' => 'Unauthorized',
+                'details' => 'invalid ',
+                ], 401); 
+        }        
+        if($question)
+        {
+            $question->delete();
             return response(null, 204);
         }
 
@@ -142,24 +155,5 @@ class CategoryController extends Controller
             'title'  => 'Not Found'
             ]
         ], 404);
-    }
-
-    public function products($id)
-    {
-        $category = Category::find($id);     
-        
-        if($category)
-        {
-            $products = $category->products;
-
-            return new ProductResourceCollection($products);                
-        }            
-
-        return response()->json(['errors' => [
-            'status' => 404,
-            'title'  => 'Not Found'
-            ]
-        ], 404);       
-        
     }
 }

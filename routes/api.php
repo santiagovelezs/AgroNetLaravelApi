@@ -36,6 +36,9 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('products/{id}', [App\Http\Controllers\Api\V1\Products\ProductController::class,'show']);
 
+    Route::get('products/{id}/questions', [App\Http\Controllers\Api\V1\Products\ProductController::class, 'questions'])
+    ->name('products.questions');
+
     Route::get('producer/{id}/products', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'products'])
                     ->name('producer.products');
 
@@ -60,11 +63,18 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
 
     Route::get('categorys/{id}', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class,'show']);
 
+    Route::get('categorys/{id}/products', [App\Http\Controllers\Api\V1\Categorys\CategoryController::class, 'products'])
+                    ->name('categorys.products');
     
     Route::get('producer/{id}', [App\Http\Controllers\Api\V1\Producers\ProducerController::class, 'producerInfo']);
 
     Route::get('shops/{id}/shipping-price', [App\Http\Controllers\Api\V1\Shop\ProducerShopController::class, 'calcDeliveryPrice']);
+    
+    Route::get('questions/{id}', [App\Http\Controllers\Api\V1\Questions\QuestionController::class,'show']);
 
+    Route::get('answers/{id}', [App\Http\Controllers\Api\V1\Answers\AnswerController::class,'show']);
+
+   
 
     Route::middleware(['auth:sanctum', 'role:'.Role::REGISTERED_USER])->group(function () {
         Route::delete('auth', [App\Http\Controllers\Api\V1\Users\AuthController::class, 'logout']);
@@ -75,7 +85,7 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::apiResource('addrs', App\Http\Controllers\Api\V1\Addrs\AddrController::class)->only(['store', 'show', 'update', 'destroy']);
         Route::get('addrs/{id}/geo-location', [App\Http\Controllers\Api\V1\Addrs\AddrController::class, 'geoLocation']);    
         Route::apiResource('geo-locations', App\Http\Controllers\Api\V1\GeoLocation\GeographicLocationController::class)->only(['store', 'show']);    
-       
+        Route::apiResource('questions', App\Http\Controllers\Api\V1\Questions\QuestionController::class)->except('index','show');
         
     });
 
@@ -98,9 +108,11 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
             Route::apiResource('shops', App\Http\Controllers\Api\V1\Shop\ProducerShopController::class); 
             Route::apiResource('products', App\Http\Controllers\Api\V1\Products\ProductController::class)->except('index','show');
             Route::apiResource('categorys', App\Http\Controllers\Api\V1\Categorys\CategoryController::class)->except('index','show');
+            Route::get('questions', [App\Http\Controllers\Api\V1\Questions\QuestionController::class,'index']);
             Route::apiResource('admin', App\Http\Controllers\Api\V1\Admin\AdminController::class);
             Route::delete('/disable-user/{id}', [App\Http\Controllers\Api\V1\Admin\AdminController::class, 'softDeleteUser']);
             Route::post('/activate-user/{id}', [App\Http\Controllers\Api\V1\Admin\AdminController::class, 'activateUser']);
+
         });
     });
    
