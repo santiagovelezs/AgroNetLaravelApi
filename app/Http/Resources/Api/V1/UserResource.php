@@ -25,7 +25,8 @@ class UserResource extends JsonResource
                 'ciudad' => $this->ciudad,
                 'telefono' => $this->telefono,
                 'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at
+                'updated_at' => $this->updated_at,
+                'deleted_at' => $this->deleted_at
             ],
             'relationships' => [
             ],

@@ -18,7 +18,7 @@ class AdminResource extends JsonResource
             'type' => 'Admin',
             'id' => $this->id,
             'attributes' => [
-
+                'id' => $this->id                            
             ],
             'relationships' => [
             ],

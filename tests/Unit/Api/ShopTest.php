@@ -93,7 +93,10 @@ class ShopTest extends TestCase
     }   
 
     public function test_getShop()
-    {                  
+    {   
+        Sanctum::actingAs(
+            User::find(2)            
+        );               
         
         $response = $this->get('api/v1/shops/1');                     
 
@@ -109,9 +112,9 @@ class ShopTest extends TestCase
         ); 
 
         $addr_chinchina = 8;
-        $producer_id_shop_palestina = 2;
+        //$producer_id_shop_palestina = 2;
 
-        $response = $this->get('api/v1/shops/1/shipping-price?producer='.$producer_id_shop_palestina.'&addrto='.$addr_chinchina);  
+        $response = $this->get('api/v1/shops/1/shipping-price?addrto='.$addr_chinchina);  
 
         $response->assertStatus(200); 
 
