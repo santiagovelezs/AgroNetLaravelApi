@@ -22,7 +22,7 @@ class AnswerController extends Controller
     public function index()
     {
         $answers = Answer::simplePaginate(25);
-        return new AnswerResourceCollection($questions);
+        return new AnswerResourceCollection($answers);
     }
 
    
@@ -131,19 +131,14 @@ class AnswerController extends Controller
 
         if($user->producer->id == $request->input('data.attributes.producer_id'))
         {
-            /*$question = Question::find($request->input('data.attributes.question_id'));
-             
-           // print_r($question);*/
          
-           //SELECT pro.id as producers_id FROM questions as q INNER JOIN products as p ON q.product_id = p.id INNER JOIN  producers as pro ON  p.producer_id = pro.id WHERE q.id = 2
+           
            $questionId = DB::table('questions as q')
                                 ->join('products as p', 'q.product_id', '=', 'p.id')
                                 ->join('producers as pro', 'p.producer_id', '=', 'pro.id')
                                 ->select('pro.id')
                                 ->where('q.id', $request->input('data.attributes.producer_id'))
                                 ->get();
-                                
-           // print_r($questionId[0]->id);
 
             if($questionId[0]->id == $request->input('data.attributes.producer_id'))
             {

@@ -30,8 +30,9 @@ class Question extends Model
 
     public function answers()
     {
-        return $this->belongsTo(Answer::class, 'answer_id');
+        return $this->hasMany(Answer::class);
     }
+    
     public function producer()
     {
         return $this->hasOneThrough(Producer::class, Product::class);
