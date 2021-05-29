@@ -48,7 +48,8 @@ class AnswerController extends Controller
             /*$question = Question::find($request->input('data.attributes.question_id'));
              
            // print_r($question);*/
-
+         
+           //SELECT pro.id as producers_id FROM questions as q INNER JOIN products as p ON q.product_id = p.id INNER JOIN  producers as pro ON  p.producer_id = pro.id WHERE q.id = 2
            $questionId = DB::table('questions as q')
                                 ->join('products as p', 'q.product_id', '=', 'p.id')
                                 ->join('producers as pro', 'p.producer_id', '=', 'pro.id')
@@ -93,9 +94,20 @@ class AnswerController extends Controller
      * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function show(Answer $answer)
+    public function show($id)
     {
-        
+        $answer = Answer::find($id);
+        if($answer)
+        {
+
+            return new AnswerResource($answer);                
+        }  
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404); 
     }
 
     /**
@@ -152,5 +164,5 @@ class AnswerController extends Controller
             ]
         ], 404);
     }
-    }
+    
 }
