@@ -3,7 +3,14 @@
 namespace App\Http\Controllers\Api\V1\Answers;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Http\Requests\api\v1\AnswerRequest;
+use App\Http\Resources\Api\V1\AnswerResource;
+use App\Http\Requests\api\v1\QuestionRequest;
+use App\Http\Resources\Api\V1\QuestionResource;
+use App\Http\Resources\Api\V1\AnswerResourceCollection;
+use Illuminate\Support\Facades\DB;
 
 class AnswerController extends Controller
 {
@@ -14,18 +21,11 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        //
+        $answers = Answer::simplePaginate(25);
+        return new AnswerResourceCollection($questions);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+   
 
     /**
      * Store a newly created resource in storage.
@@ -33,9 +33,58 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AnswerRequest $request)
     {
-        //
+        $user = $request->user();        
+        
+        if($user->admin)
+        {
+            $answer = Answer::create($request->input('data.attributes'));
+            return new AnswerResource($answer);
+        } 
+
+        if($user->producer->id == $request->input('data.attributes.producer_id'))
+        {
+            /*$question = Question::find($request->input('data.attributes.question_id'));
+             
+           // print_r($question);*/
+
+           $questionId = DB::table('questions as q')
+                                ->join('products as p', 'q.product_id', '=', 'p.id')
+                                ->join('producers as pro', 'p.producer_id', '=', 'pro.id')
+                                ->select('pro.id')
+                                ->where('q.id', $request->input('data.attributes.producer_id'))
+                                ->get();
+                                
+           // print_r($questionId[0]->id);
+
+            if($questionId[0]->id == $request->input('data.attributes.producer_id'))
+            {
+                
+                $answer = Answer::create($request->input('data.attributes'));
+                return new AnswerResource($answer);
+            }
+            else
+            {
+                return response()->json([
+                    'message' => 'Unautorized',
+                    'details' => 'invalid ',
+                    ], 401); 
+            }
+        }
+            else
+            {
+                return response()->json([
+                    'message' => 'Unautorized',
+                    'details' => 'invalid ',
+                    ], 401); 
+            }
+           
+             
+
+        return response()->json([
+            'message' => 'Unauthorized'
+            ], 401);
     }
 
     /**

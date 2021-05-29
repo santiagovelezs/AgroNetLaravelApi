@@ -28,7 +28,8 @@ class AnswerRequest extends FormRequest
             'data' => ['required', 'array'],
             'data.type' => ['required'],
             'data.attributes' => ['required', 'array'],
-            'data.attributes.question_id' => ['required', 'integer','exists:users,id'],
+            'data.attributes.producer_id' => ['required', 'integer','exists:producers,id'],
+            'data.attributes.question_id' => ['required', 'integer','exists:questions,id'],
             'data.attributes.answer' => ['required', 'string', 'max:400']
         ];
     }
