@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\api\v1\QuestionRequest;
 use App\Http\Resources\Api\V1\QuestionResource;
 use App\Http\Resources\Api\V1\QuestionResourceCollection;
+use App\Http\Resources\Api\V1\AnswerResourceCollection;
 
 class QuestionController extends Controller
 {
@@ -155,5 +156,25 @@ class QuestionController extends Controller
             'title'  => 'Not Found'
             ]
         ], 404);
+    }
+    public function answers($id)
+    {
+       
+        $question = Question::find($id);     
+       
+        if($question)
+        {
+            $answer = $question->answers;
+            
+            return new AnswerResourceCollection($answer);   
+                       
+        }            
+         
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);       
+        
     }
 }
