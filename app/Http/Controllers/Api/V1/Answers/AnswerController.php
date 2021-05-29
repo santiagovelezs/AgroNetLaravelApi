@@ -110,16 +110,7 @@ class AnswerController extends Controller
         ], 404); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Answer  $answer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Answer $answer)
-    {
-        //
-    }
+  
 
     /**
      * Update the specified resource in storage.
@@ -128,9 +119,63 @@ class AnswerController extends Controller
      * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Answer $answer)
+    public function update(AnswerRequest $request, $id)
     {
-        //
+        
+        $user = $request->user();        
+        
+        if($user->admin)
+        {
+            $Answer = Answer::find($id);
+        } 
+
+        if($user->producer->id == $request->input('data.attributes.producer_id'))
+        {
+            /*$question = Question::find($request->input('data.attributes.question_id'));
+             
+           // print_r($question);*/
+         
+           //SELECT pro.id as producers_id FROM questions as q INNER JOIN products as p ON q.product_id = p.id INNER JOIN  producers as pro ON  p.producer_id = pro.id WHERE q.id = 2
+           $questionId = DB::table('questions as q')
+                                ->join('products as p', 'q.product_id', '=', 'p.id')
+                                ->join('producers as pro', 'p.producer_id', '=', 'pro.id')
+                                ->select('pro.id')
+                                ->where('q.id', $request->input('data.attributes.producer_id'))
+                                ->get();
+                                
+           // print_r($questionId[0]->id);
+
+            if($questionId[0]->id == $request->input('data.attributes.producer_id'))
+            {
+               
+                $answer = Answer::find($id);
+            }
+            else
+            {
+                return response()->json([
+                    'message' => 'Unautorized',
+                    'details' => 'invalid ',
+                    ], 401); 
+            }
+        }
+            else
+            {
+                return response()->json([
+                    'message' => 'Unautorized',
+                    'details' => 'invalid ',
+                    ], 401); 
+            }
+            if(isset($answer))
+            {
+                $answer->update($request->input('data.attributes'));
+                return new AnswerResource($answer);
+            }
+    
+            return response()->json(['errors' => [
+                'status' => 404,
+                'title'  => 'Not Found'
+                ]
+            ], 404);
     }
 
     /**
