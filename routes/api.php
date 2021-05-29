@@ -94,7 +94,8 @@ Route::group(['prefix'=>'v1','as'=>'api.v1.'], function(){
         Route::apiResource('events', App\Http\Controllers\Api\V1\EventsAgro\EventController::class)->except(['index']);
         Route::apiResource('news', App\Http\Controllers\Api\V1\News\NewsController::class)->except(['index', 'show']); 
         Route::apiResource('shops', App\Http\Controllers\Api\V1\Shop\ProducerShopController::class)->except(['index']); 
-        Route::apiResource('products', App\Http\Controllers\Api\V1\Products\ProductController::class)->except('index','show');       
+        Route::apiResource('products', App\Http\Controllers\Api\V1\Products\ProductController::class)->except('index','show'); 
+        Route::apiResource('answers', App\Http\Controllers\Api\V1\Answers\AnswerController::class)->only(['store','update']);      
           
     });
 
