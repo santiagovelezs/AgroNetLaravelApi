@@ -127,8 +127,30 @@ class AnswerController extends Controller
      * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Answer $answer)
+    public function destroy(Request $request, $id)
     {
-        //
+        if($request->user()->admin)
+        {
+            $answer = Answer::find($id);
+        }
+        else 
+        {
+            return response()->json([
+                'message' => 'Unauthorized',
+                'details' => 'invalid ',
+                ], 401); 
+        }        
+        if($answer)
+        {
+            $answer->delete();
+            return response(null, 204);
+        }
+
+        return response()->json(['errors' => [
+            'status' => 404,
+            'title'  => 'Not Found'
+            ]
+        ], 404);
+    }
     }
 }
