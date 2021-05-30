@@ -40,5 +40,11 @@ class QuestionSeeder extends Seeder
             'user_id'=>1,
             "question"=>$faker->text($maxNbChars = 200),
         ]);
+
+        DB::table('questions')->insert([
+            'product_id'=>4,
+            'user_id'=>1,
+            "question"=>$faker->text($maxNbChars = 200),
+        ]);
     }
 }
